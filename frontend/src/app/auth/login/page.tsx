@@ -8,11 +8,9 @@ import useDeviceType from './../../../hooks/useDeviceType'
 import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { API } from '../../../constant'
 import { useAuthContext } from '../../../context/AuthContext'
 import { setToken } from '../../../helpers'
-import { access } from 'fs'
-import { isGetAccessor } from 'typescript'
+import { Auth_API, headerConfig } from '@/constant'
 
 const LoginPage = () => {
   const deviceType = useDeviceType()
@@ -32,14 +30,14 @@ const LoginPage = () => {
     onSubmit: values => {
       setSpinner(true)
       axios
-        .post(`${API}/Auth/login`, values, {
-          headers: { 'Access-Control-Allow-Origin': '*' },
+        .post(`${Auth_API}/login`, values, {
+          headers: headerConfig,
         })
         .then(response => {
           // Navigation to homepage
-          setUser(response.data.username)
-          setToken(response.data.accessToken)
 
+          // setUser(response.data.username)
+          setToken(response.data.accessToken)
           router.push('/movie')
           // Handle success.
           setSpinner(false)
