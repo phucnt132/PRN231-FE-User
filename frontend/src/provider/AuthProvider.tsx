@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { getToken } from '../helpers'
-import { API, BEARER } from '../constant'
+import { API, Auth_API, BEARER } from '../constant'
 import { AuthContext } from '../context/AuthContext'
 
 const AuthProvider = ({ children }) => {
@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
   const fetchLoggedInUser = async token => {
     setIsLoading(true)
     try {
-      const response = await fetch(`${API}/users/me`, {
+      const response = await fetch(`${Auth_API}/login`, {
         headers: { Authorization: `${BEARER} ${token}` },
       })
       const data = await response.json()
