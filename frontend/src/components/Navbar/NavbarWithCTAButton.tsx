@@ -37,7 +37,7 @@ const NavbarWithCTAButton = () => {
         header={{
           text: (
             <Link href='/' className='text-xl !text-light-content-neutral-1'>
-              The Code & Art
+              HighFlix
             </Link>
           ),
         }}
