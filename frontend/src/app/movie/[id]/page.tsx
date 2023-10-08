@@ -18,8 +18,8 @@ const MovideDetailPage = () => {
         headers: headerConfig,
       })
       .then(response => {
-        console.log(response.data)
-        setMovie(response.data)
+        console.log(response.data.data)
+        setMovie(response.data.data)
         setSpinner(false)
       })
       .catch(error => {
