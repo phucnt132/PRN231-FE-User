@@ -4,9 +4,9 @@ const MoviePage = () => {
   
   // Render UI
   return (
-    <div>MoviePage
+    <div>MoviePage       
     </div>
-    
+
   )
 }
 

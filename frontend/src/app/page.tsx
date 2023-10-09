@@ -12,6 +12,7 @@ import Meta from '@douyinfe/semi-ui/lib/es/card/meta'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Movie_API, headerConfig } from '@/constant'
+import Rating from '@/components/Rating/rating'
 
 interface Moive {
   movieId: number
@@ -209,6 +210,7 @@ export default function Home() {
           <h3>Movie Table</h3>
         </div>
       </div>
+      <div><Rating/></div>
     </main>
     
   )
