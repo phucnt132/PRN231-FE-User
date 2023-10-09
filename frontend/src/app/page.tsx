@@ -1,4 +1,6 @@
 import Link from "next/link";
+import List from '@/components/List/List'
+
 
 export default function Home() {
   return (
@@ -9,6 +11,8 @@ export default function Home() {
         <li><Link href={'/movie'} className="hover:text-blue-600">Movie page</Link></li>
         <li><Link href={'/movie/1'} className="hover:text-blue-600">Movie detail with id = 1</Link></li>
       </ul>
+      <div><List/></div>
     </main>
+    
   )
 }
