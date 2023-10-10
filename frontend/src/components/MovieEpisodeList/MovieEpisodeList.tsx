@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export default function MovieEpisodeList () {
   const movieEpisodes = [
@@ -12,54 +12,50 @@ export default function MovieEpisodeList () {
     { episode: 'Episode 8', title: 'Title of Episode 8' },
     { episode: 'Episode 9', title: 'Title of Episode 9' },
     { episode: 'Episode 10', title: 'Title of Episode 10' },
-  ];
+  ]
   const divStyle = {
-    background: '#222', 
-    color: 'white', 
+    background: '#222',
+    color: 'white',
     border: '.0625rem solid #000',
-    boxShadow: '.3125rem .3125rem .625rem #888',  
-    padding: '.625rem',  
-    width: '240px', 
+    padding: '.625rem',
     height: '340px',
-  };
+  }
   const h2Style = {
-    fontSize: '20px', 
-    color: 'white', 
-    marginBottom: '10px',   
-  };
+    fontSize: '20px',
+    color: 'white',
+    marginBottom: '10px',
+  }
   const hrStyle = {
-    margin: '10px 0', 
-  };
+    margin: '10px 0',
+  }
   const listItemStyle = {
-    color: 'pink',    
+    color: 'pink',
     fontSize: '12px',
     cursor: 'pointer',
-    borderBottom: '0.5px solid black',  
-    padding: '2px',           
+    borderBottom: '0.5px solid black',
+    padding: '2px',
     transition: 'color 0.3s',
-  };
-  const buttonStyle ={
-    marginTop: '10px', 
+  }
+  const buttonStyle = {
+    marginTop: '10px',
     color: 'white',
     fontSize: '12px',
-  };
+  }
   return (
     <div style={divStyle}>
-    <h2 style={h2Style}>Latest Episodes</h2>
-    <hr style={hrStyle}/>
+      <h2 style={h2Style}>Latest Episodes</h2>
+      <hr style={hrStyle} />
       <ul>
         {movieEpisodes.map((episode, index) => (
-          <li key={index}style={listItemStyle} >
-             <a href="#"></a>
+          <li key={index} style={listItemStyle}>
+            <a href='#'></a>
             {episode.episode} - {episode.title}
           </li>
         ))}
       </ul>
-      <button style={buttonStyle}>
-        More...
-      </button>     
+      <button style={buttonStyle}>More...</button>
     </div>
-  );
-};
+  )
+}
 
 

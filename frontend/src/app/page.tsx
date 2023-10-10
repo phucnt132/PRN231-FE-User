@@ -8,12 +8,11 @@ import {
   Space,
   Typography,
 } from '@douyinfe/semi-ui'
-import Meta from '@douyinfe/semi-ui/lib/es/card/meta'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Movie_API, headerConfig } from '@/constant'
 import Rating from '@/components/Rating/rating'
-import MovieEpisodeList from '@/components/List/List'
+import MovieEpisodeList from '@/components/MovieEpisodeList/MovieEpisodeList'
 
 interface Moive {
   movieId: number
@@ -109,45 +108,6 @@ export default function Home() {
     ],
   ]
 
-  const movieDatas = [
-    {
-      src: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo2.jpeg',
-      title: 'Batman Begins',
-      main: 'Christian Bale',
-      runtime: '120m',
-    },
-    {
-      src: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo2.jpeg',
-      title: 'Batman Begins',
-      main: 'Christian Bale',
-      runtime: '120m',
-    },
-    {
-      src: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo2.jpeg',
-      title: 'Batman Begins',
-      main: 'Christian Bale',
-      runtime: '120m',
-    },
-    {
-      src: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo2.jpeg',
-      title: 'Batman Begins',
-      main: 'Christian Bale',
-      runtime: '120m',
-    },
-    {
-      src: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo2.jpeg',
-      title: 'Batman Begins',
-      main: 'Christian Bale',
-      runtime: '120m',
-    },
-    {
-      src: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo2.jpeg',
-      title: 'Batman Begins',
-      main: 'Christian Bale',
-      runtime: '120m',
-    },
-  ]
-
   return (
     <main className='flex min-h-screen flex-col items-center justify-between'>
       <Carousel style={style} className='' theme='dark'>
@@ -212,8 +172,6 @@ export default function Home() {
           <div><MovieEpisodeList/></div>
         </div>
       </div>
-      <div><Rating/></div>
     </main>
-    
   )
 }
