@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Movie_API, headerConfig } from '@/constant'
 import Rating from '@/components/Rating/rating'
+import MovieEpisodeList from '@/components/List/List'
 
 interface Moive {
   movieId: number
@@ -208,6 +209,7 @@ export default function Home() {
         </div>
         <div className='col-span-1 bg-gray-700'>
           <h3>Movie Table</h3>
+          <div><MovieEpisodeList/></div>
         </div>
       </div>
       <div><Rating/></div>

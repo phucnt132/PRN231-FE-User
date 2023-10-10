@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MovieEpisodeList = () => {
+export default function MovieEpisodeList () {
   const movieEpisodes = [
     { episode: 'Episode 1', title: 'Title of Episode 1' },
     { episode: 'Episode 2', title: 'Title of Episode 2' },
@@ -62,11 +62,4 @@ const MovieEpisodeList = () => {
   );
 };
 
-export default function List() {
-  return (
-    <div>
-      <h2>Movie Latest Episodes</h2>
-      <MovieEpisodeList />
-    </div>
-  );
-}
+
