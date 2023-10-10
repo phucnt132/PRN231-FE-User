@@ -14,7 +14,7 @@ import { Movie_API, headerConfig } from '@/constant'
 import Rating from '@/components/Rating/rating'
 import MovieEpisodeList from '@/components/MovieEpisodeList/MovieEpisodeList'
 
-interface Moive {
+export interface Moive {
   movieId: number
   postedByUser: number
   movieName: string
@@ -169,7 +169,9 @@ export default function Home() {
         </div>
         <div className='col-span-1 bg-gray-700'>
           <h3>Movie Table</h3>
-          <div><MovieEpisodeList/></div>
+          <div>
+            <MovieEpisodeList />
+          </div>
         </div>
       </div>
     </main>
