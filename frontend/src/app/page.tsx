@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Carousel,
+  Pagination,
   Space,
   Typography,
 } from '@douyinfe/semi-ui'
@@ -35,6 +36,7 @@ export interface Moive {
 export default function Home() {
   const [movies, setMovies] = useState<Moive[]>([])
   const [spinner, setSpinner] = useState(true)
+  //const totalPages = Math.ceil();
 
   useEffect(() => {
     // Fetching movie
@@ -52,8 +54,6 @@ export default function Home() {
         console.log('An error occurred:', error.response)
       })
   }, [])
-
-  console.log(movies)
 
   const { Title, Paragraph } = Typography
   const { Meta } = Card
@@ -141,7 +141,7 @@ export default function Home() {
         })}
       </Carousel>
       {/*  movie content */}
-      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 mt-6 w-[100%] bg-gray-100 p-4'>
+      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 mt-6 w-[100%] bg-gray-100 p-4 rounded'>
         <div className='col-span-4'>
           <div className='mb-6 pb-4 border-b border-primary text-primary text-2xl'>
             <h3 className='bg-red-600 w-fit p-1 rounded text-white'>
@@ -162,16 +162,11 @@ export default function Home() {
             ))}
           </div>
           <div className='flex justify-center'>
-            <button className='btn hover:scale-125 transition ease-out duration-500 bg-white p-1 rounded'>
-              Load more...
-            </button>
+            <Pagination total={20} style={{ marginBottom: 12 }}></Pagination>
           </div>
         </div>
-        <div className='col-span-1 bg-gray-700'>
-          <h3>Movie Table</h3>
-          <div>
-            <MovieEpisodeList />
-          </div>
+        <div className='col-span-1x'>
+          <MovieEpisodeList movie={movies} />
         </div>
       </div>
     </main>

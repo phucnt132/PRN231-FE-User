@@ -1,35 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const MovieEpisodeList = () => {
-  const movieEpisodes = [
-    { episode: 'Episode 1', title: 'Title of Episode 1' },
-    { episode: 'Episode 2', title: 'Title of Episode 2' },
-    { episode: 'Episode 3', title: 'Title of Episode 3' },
-    { episode: 'Episode 4', title: 'Title of Episode 4' },
-    { episode: 'Episode 5', title: 'Title of Episode 5' },
-    { episode: 'Episode 6', title: 'Title of Episode 6' },
-    { episode: 'Episode 7', title: 'Title of Episode 7' },
-    { episode: 'Episode 8', title: 'Title of Episode 8' },
-    { episode: 'Episode 9', title: 'Title of Episode 9' },
-    { episode: 'Episode 10', title: 'Title of Episode 10' },
-  ]
+const MovieEpisodeList = movie => {
+  console.log(movie.movie)
+  const [movieEpisodes, setMovieEpisodes] = useState([])
+
+  useEffect(() => {
+    setMovieEpisodes(movie.movie)
+  })
   const divStyle = {
-    background: '#222',
     color: 'white',
-    border: '.0625rem solid #000',
     padding: '.625rem',
-    height: '340px',
+    height: '500px',
   }
   const h2Style = {
     fontSize: '20px',
-    color: 'white',
     marginBottom: '10px',
   }
   const hrStyle = {
     margin: '10px 0',
   }
   const listItemStyle = {
-    color: 'pink',
     fontSize: '12px',
     cursor: 'pointer',
     borderBottom: '0.5px solid black',
@@ -42,18 +32,19 @@ const MovieEpisodeList = () => {
     fontSize: '12px',
   }
   return (
-    <div style={divStyle}>
-      <h2 style={h2Style}>Latest Episodes</h2>
+    <div style={divStyle} className='bg-white rounded'>
+      <h2 style={h2Style} className='text-teal-800'>
+        Latest Episodes
+      </h2>
       <hr style={hrStyle} />
       <ul>
         {movieEpisodes.map((episode, index) => (
-          <li key={index} style={listItemStyle}>
+          <li key={index} style={listItemStyle} className='text-gray-800 mt-4'>
             <a href='#'></a>
-            {episode.episode} - {episode.title}
+            {episode.movieName} - episodes {episode.totalEpisodes}
           </li>
         ))}
       </ul>
-      <button style={buttonStyle}>More...</button>
     </div>
   )
 }
