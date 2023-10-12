@@ -34,10 +34,10 @@ export interface Movie {
 }
 
 export default function Home() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [spinner, setSpinner] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const moviesPerPage = 8;
+  const [movies, setMovies] = useState<Movie[]>([])
+  const [spinner, setSpinner] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const moviesPerPage = 5
 
   useEffect(() => {
     // Fetching movie
@@ -45,83 +45,42 @@ export default function Home() {
       .get(`${Movie_API}`, {
         headers: headerConfig,
       })
-      .then((response) => {
-        console.log(response.data.data);
-        setMovies(response.data.data);
-        setSpinner(false);
+      .then(response => {
+        console.log(response.data.data)
+        setMovies(response.data.data)
+        setSpinner(false)
       })
-      .catch((error) => {
-        setSpinner(true);
-        console.log('An error occurred:', error.response);
-      });
-  }, []);
+      .catch(error => {
+        setSpinner(true)
+        console.log('An error occurred:', error.response)
+      })
+  }, [])
 
-  const { Title, Paragraph } = Typography;
-  const { Meta } = Card;
+  const { Meta } = Card
 
   const style = {
     width: '100%',
     height: '400px',
-  };
-
-  const titleStyle = {
-    //position: 'absolute',
-    top: '100px',
-    left: '100px',
-    color: '#1C1F23',
-  };
-
-  const colorStyle = {
-    color: '#1C1F23',
-  };
-
-  const renderLogo = () => {
-    return (
-      <img
-        src='https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/semi_logo.svg'
-        alt='semi_logo'
-        style={{ width: 87, height: 31 }}
-      />
-    );
-  };
+  }
 
   const imgList = [
-    'https://lf3-static.bytednsdoc.com/obj/eden-cn/hjeh7pldnulm/SemiDocs/bg-1.png',
-    'https://lf3-static.bytednsdoc.com/obj/eden-cn/hjeh7pldnulm/SemiDocs/bg-2.png',
-    'https://lf3-static.bytednsdoc.com/obj/eden-cn/hjeh7pldnulm/SemiDocs/bg-3.png',
-  ];
+    'https://pic-bstarstatic.akamaized.net/ugc/73e8e097b338e8b85ea5f035a4273a442c708fa0.jpg',
+    'https://misskick.vn/wp-content/uploads/2023/08/top-phim-bo-my-hay-nhat-2020-8-800x450-1.png',
+  ]
 
-  const textList = [
-    [
-      'Semi Design System Management',
-      'From Semi Design, To Any Design',
-      'Quickly define your design system and apply it to design drafts and code',
-    ],
-    [
-      'Semi Material',
-      'Customized components for business scenarios, support online preview and debugging',
-      'Content co-authored by Semi Design users',
-    ],
-    [
-      'Semi Template',
-      'Efficient Design2Code converts design into real code in seconds',
-      'One-click conversion of massive page template front-end code',
-    ],
-  ];
+  const totalMovies = movies.length
+  const totalPages = Math.ceil(totalMovies / moviesPerPage)
+  const lastMovieIndex = currentPage * moviesPerPage
+  const firstMovieIndex = lastMovieIndex - moviesPerPage
+  const currentMovies = movies.slice(firstMovieIndex, lastMovieIndex)
 
-  const totalMovies = movies.length;
-  const totalPages = Math.ceil(totalMovies / moviesPerPage);
-  const lastMovieIndex = currentPage * moviesPerPage;
-  const firstMovieIndex = lastMovieIndex - moviesPerPage;
-  const currentMovies = movies.slice(firstMovieIndex, lastMovieIndex);
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
+  const handlePageChange = newPage => {
+    setCurrentPage(newPage)
+  }
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-between'>
-      <Carousel style={style} className='' theme='dark'>
+      <Carousel style={style} className='mx-0' theme='dark'>
         {imgList.map((src, index) => {
           return (
             <div
@@ -130,29 +89,12 @@ export default function Home() {
                 backgroundSize: 'cover',
                 backgroundImage: `url(${src})`,
               }}
-            >
-              <Space
-                vertical
-                align='start'
-                spacing='medium'
-                style={titleStyle}
-                className='position: absolute'
-              >
-                {renderLogo()}
-                <Title heading={2} style={colorStyle}>
-                  {textList[index][0]}
-                </Title>
-                <Space vertical align='start'>
-                  <Paragraph style={colorStyle}>{textList[index][1]}</Paragraph>
-                  <Paragraph style={colorStyle}>{textList[index][2]}</Paragraph>
-                </Space>
-              </Space>
-            </div>
-          );
+            ></div>
+          )
         })}
       </Carousel>
       {/*  movie content */}
-      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 mt-6 w-[100%] bg-gray-100 p-4 rounded'>
+      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 mt-6 w-[80%] bg-gray-100 p-4 rounded'>
         <div className='col-span-4'>
           <div className='mb-6 pb-4 border-b border-primary text-primary text-2xl'>
             <h3 className='bg-red-600 w-fit p-1 rounded text-white'>
@@ -182,9 +124,9 @@ export default function Home() {
           </div>
         </div>
         <div className='col-span-1'>
-          <MovieEpisodeList movie={currentMovies} />
+          <MovieEpisodeList movie={movies} />
         </div>
       </div>
     </main>
-  );
+  )
 }

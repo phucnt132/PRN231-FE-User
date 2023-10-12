@@ -33,13 +33,17 @@ const MovieEpisodeList = movie => {
   }
   return (
     <div style={divStyle} className='bg-white rounded'>
-      <h2 style={h2Style} className='text-teal-800'>
+      <h2 style={h2Style} className='text-teal-800 font-sans'>
         Latest Episodes
       </h2>
       <hr style={hrStyle} />
-      <ul>
+      <ul className='font-sans'>
         {movieEpisodes.map((episode, index) => (
-          <li key={index} style={listItemStyle} className='text-gray-800 mt-4'>
+          <li
+            key={index}
+            style={listItemStyle}
+            className='text-gray-800 mt-4 hover:bg-gray-400 hover:text-white'
+          >
             <a href='#'></a>
             {episode.movieName} - episodes {episode.totalEpisodes}
           </li>
