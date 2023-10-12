@@ -15,7 +15,7 @@ import { Movie_API, headerConfig } from '@/constant'
 import Rating from '@/components/Rating/rating'
 import MovieEpisodeList from '@/components/MovieEpisodeList/MovieEpisodeList'
 
-export interface Moive {
+export interface Movie {
   movieId: number
   postedByUser: number
   movieName: string
@@ -34,9 +34,10 @@ export interface Moive {
 }
 
 export default function Home() {
-  const [movies, setMovies] = useState<Moive[]>([])
-  const [spinner, setSpinner] = useState(true)
-  //const totalPages = Math.ceil();
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [spinner, setSpinner] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const moviesPerPage = 8;
 
   useEffect(() => {
     // Fetching movie
@@ -44,35 +45,35 @@ export default function Home() {
       .get(`${Movie_API}`, {
         headers: headerConfig,
       })
-      .then(response => {
-        console.log(response.data.data)
-        setMovies(response.data.data)
-        setSpinner(false)
+      .then((response) => {
+        console.log(response.data.data);
+        setMovies(response.data.data);
+        setSpinner(false);
       })
-      .catch(error => {
-        setSpinner(true)
-        console.log('An error occurred:', error.response)
-      })
-  }, [])
+      .catch((error) => {
+        setSpinner(true);
+        console.log('An error occurred:', error.response);
+      });
+  }, []);
 
-  const { Title, Paragraph } = Typography
-  const { Meta } = Card
+  const { Title, Paragraph } = Typography;
+  const { Meta } = Card;
 
   const style = {
     width: '100%',
     height: '400px',
-  }
+  };
 
   const titleStyle = {
     //position: 'absolute',
     top: '100px',
     left: '100px',
     color: '#1C1F23',
-  }
+  };
 
   const colorStyle = {
     color: '#1C1F23',
-  }
+  };
 
   const renderLogo = () => {
     return (
@@ -81,14 +82,14 @@ export default function Home() {
         alt='semi_logo'
         style={{ width: 87, height: 31 }}
       />
-    )
-  }
+    );
+  };
 
   const imgList = [
     'https://lf3-static.bytednsdoc.com/obj/eden-cn/hjeh7pldnulm/SemiDocs/bg-1.png',
     'https://lf3-static.bytednsdoc.com/obj/eden-cn/hjeh7pldnulm/SemiDocs/bg-2.png',
     'https://lf3-static.bytednsdoc.com/obj/eden-cn/hjeh7pldnulm/SemiDocs/bg-3.png',
-  ]
+  ];
 
   const textList = [
     [
@@ -106,7 +107,17 @@ export default function Home() {
       'Efficient Design2Code converts design into real code in seconds',
       'One-click conversion of massive page template front-end code',
     ],
-  ]
+  ];
+
+  const totalMovies = movies.length;
+  const totalPages = Math.ceil(totalMovies / moviesPerPage);
+  const lastMovieIndex = currentPage * moviesPerPage;
+  const firstMovieIndex = lastMovieIndex - moviesPerPage;
+  const currentMovies = movies.slice(firstMovieIndex, lastMovieIndex);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-between'>
@@ -137,7 +148,7 @@ export default function Home() {
                 </Space>
               </Space>
             </div>
-          )
+          );
         })}
       </Carousel>
       {/*  movie content */}
@@ -149,7 +160,7 @@ export default function Home() {
             </h3>
           </div>
           <div className='grid grid-cols-5 gap-10 mb-6 pb-4'>
-            {movies.map((movie, index) => (
+            {currentMovies.map((movie, index) => (
               <Card
                 style={{ maxWidth: 200 }}
                 cover={
@@ -162,13 +173,18 @@ export default function Home() {
             ))}
           </div>
           <div className='flex justify-center'>
-            <Pagination total={20} style={{ marginBottom: 12 }}></Pagination>
+            <Pagination
+              total={totalMovies}
+              pageSize={moviesPerPage}
+              onChange={handlePageChange}
+              style={{ marginBottom: 12 }}
+            />
           </div>
         </div>
-        <div className='col-span-1x'>
-          <MovieEpisodeList movie={movies} />
+        <div className='col-span-1'>
+          <MovieEpisodeList movie={currentMovies} />
         </div>
       </div>
     </main>
-  )
+  );
 }
