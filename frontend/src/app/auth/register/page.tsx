@@ -38,7 +38,9 @@ const RegisterPage = () => {
     onSubmit: values => {
       setSpinner(true)
       axios
-        .post(`${API}/Auth/register`, values, {headers: {'Access-Control-Allow-Origin' : '*'}})
+        .post(`${API}/Auth/register`, values, {
+          headers: { 'Access-Control-Allow-Origin': '*' },
+        })
         .then(response => {
           // Navigation to homepage
           setUser(response.data.user)
@@ -58,7 +60,7 @@ const RegisterPage = () => {
   return (
     <>
       {deviceType == 'desktop' ? (
-        <div className='flex w-full gap-4 justify-center items-center mx-auto max-h-[100vh]'>
+        <div className='flex w-full gap-4 justify-center items-center mx-auto h-fit m-4 '>
           <form
             onSubmit={formik.handleSubmit}
             className='w-6/12 px-[100px] flex flex-col gap-2'
@@ -147,7 +149,7 @@ const RegisterPage = () => {
               </div>
             ) : null}
 
-            <div className='flex flex-col gap-2 my-2 items-end'>
+            <div className='flex flex-col gap-2 my-2 items-center'>
               <Link href='/auth/login' className='text-gray-500 italic text-sm'>
                 You already have account? Log in!
               </Link>

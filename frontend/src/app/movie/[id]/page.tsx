@@ -19,8 +19,8 @@ const MovideDetailPage = () => {
         headers: headerConfig,
       })
       .then(response => {
-        console.log(response.data)
-        setMovie(response.data)
+        console.log(response.data.data)
+        setMovie(response.data.data)
         setSpinner(false)
       })
       .catch(error => {
@@ -89,7 +89,7 @@ const MovideDetailPage = () => {
 
           <div className='flex gap-4'>
             <p className='font-semibold min-w-[6rem]'>Mô tả phim: </p>
-            <p className=''>{movie.description}</p>
+            <p className='overflow-y-scroll h-36'>{movie.description}</p>
           </div>
 
           <div className='flex gap-4'>

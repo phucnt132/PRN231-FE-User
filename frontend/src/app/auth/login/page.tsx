@@ -53,7 +53,7 @@ const LoginPage = () => {
   return (
     <>
       {deviceType == 'desktop' ? (
-        <div className='flex w-full gap-4 justify-center items-center mx-auto max-h-[100vh]'>
+        <div className='flex w-full gap-4 justify-center items-center mx-auto h-fit m-4'>
           <form
             onSubmit={formik.handleSubmit}
             className='w-6/12 px-[100px] flex flex-col gap-2'
@@ -102,7 +102,7 @@ const LoginPage = () => {
               </div>
             ) : null}
 
-            <div className='flex flex-col gap-2 items-end'>
+            <div className='flex flex-row gap-2 items-center justify-center'>
               <Link
                 href='/auth/resetPassword'
                 className='text-gray-500 italic text-sm'

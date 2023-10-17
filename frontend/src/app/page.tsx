@@ -80,7 +80,7 @@ export default function Home() {
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-between'>
-      <Carousel style={style} className='mx-0' theme='dark'>
+      <Carousel style={style} className='mx-0 !absolute' theme='dark'>
         {imgList.map((src, index) => {
           return (
             <div
@@ -94,7 +94,7 @@ export default function Home() {
         })}
       </Carousel>
       {/*  movie content */}
-      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 mt-6 w-[80%] bg-gray-100 p-4 rounded'>
+      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 w-[80%] bg-gray-100 p-4 rounded mt-[420px]'>
         <div className='col-span-4'>
           <div className='mb-6 pb-4 border-b border-primary text-primary text-2xl'>
             <h3 className='bg-red-600 w-fit p-1 rounded text-white'>
