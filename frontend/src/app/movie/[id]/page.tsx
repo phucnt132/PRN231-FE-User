@@ -1,11 +1,12 @@
 'use client'
-import { Episode_API, Movie_API, headerConfig } from '@/constant'
+import { Comment_API, Episode_API, Movie_API, headerConfig } from '@/constant'
 import axios from 'axios'
 import { Button, Card, Spinner } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 const MovideDetailPage = () => {
   const [episode, setEpisode] = useState(null)
   const [movie, setMovie] = useState(null)
+  const [comments, setComments] = useState([])
   const [spinner, setSpinner] = useState(true)
   const currentUrl = window.location.href
   const lastSegment = currentUrl.split('/').pop()
@@ -35,6 +36,20 @@ const MovideDetailPage = () => {
       .then(response => {
         // Navigation to homepage
         setEpisode(response.data)
+      })
+      .catch(error => {
+        console.log('An error occurred:', error.response)
+      })
+
+    // Fetching Comment of movie
+    axios
+      .get(`${Comment_API}/movieId?movieId=${movieId}`, {
+        headers: headerConfig,
+      })
+      .then(response => {
+        // Navigation to homepage
+        console.log(response.data.data)
+        setComments(response.data.data)
       })
       .catch(error => {
         console.log('An error occurred:', error.response)
@@ -103,27 +118,33 @@ const MovideDetailPage = () => {
             <p>Xem tất cả</p>
           </a>
         </div>
+
         <div className='flow-root'>
           <ul className='divide-y divide-gray-200 dark:divide-gray-700'>
-            <li className='py-3 sm:py-4'>
-              <div className='flex items-start space-x-4'>
-                <div className='shrink-0'>
-                  <img
-                    alt='Avatar image'
-                    className='rounded-lg aspect-square !h-[100px] !w-[100px]'
-                    src='https://i.pinimg.com/564x/f7/44/e7/f744e7bd579098a9c9bb606e05608636.jpg'
-                  />
+            {comments.map(comment => (
+              <li className='py-3 sm:py-4'>
+                <div className='flex items-start space-x-4'>
+                  <div className='shrink-0'>
+                    <img
+                      alt='Avatar image'
+                      className='rounded-lg aspect-square !h-[100px] !w-[100px]'
+                      src='https://i.pinimg.com/564x/f7/44/e7/f744e7bd579098a9c9bb606e05608636.jpg'
+                    />
+                  </div>
+                  <div className='min-w-0 flex-1'>
+                    <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
+                      {comment.commentedDate}
+                    </p>
+                    <p className='truncate text-sm font-medium text-gray-900 dark:text-white'>
+                      {comment.userId}
+                    </p>
+                    <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
+                      {comment.commentContent}
+                    </p>
+                  </div>
                 </div>
-                <div className='min-w-0 flex-1'>
-                  <p className='truncate text-sm font-medium text-gray-900 dark:text-white'>
-                    Tên user
-                  </p>
-                  <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
-                    Nội dung comment
-                  </p>
-                </div>
-              </div>
-            </li>
+              </li>
+            ))}
           </ul>
         </div>
       </Card>
