@@ -94,7 +94,7 @@ export default function Home() {
         })}
       </Carousel>
       {/*  movie content */}
-      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 w-[80%] bg-gray-100 p-4 rounded mt-[420px]'>
+      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 w-fit bg-gray-100 p-4 rounded mt-[420px]'>
         <div className='col-span-4'>
           <div className='mb-6 pb-4 border-b border-primary text-primary text-2xl'>
             <h3 className='bg-red-600 w-fit p-1 rounded text-white'>
@@ -109,7 +109,13 @@ export default function Home() {
                   <img alt='example' src={movie.moviePoster} className='h-60' />
                 }
               >
-                <Meta className='text-center' title={movie.movieName} />
+                {/* <Meta className='text-center' title={movie.movieName} /> */}
+                <a
+                  href={`/movie/${movie.movieId}`}
+                  className='hover:text-blue-600 text-gray-800 font-bold'
+                >
+                  {movie.movieName}
+                </a>
                 <p className='mt-3 text-xs'>{movie.aliasName}</p>
               </Card>
             ))}
