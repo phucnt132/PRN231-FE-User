@@ -9,7 +9,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useAuthContext } from '../../../context/AuthContext'
-import { setToken } from '../../../helpers'
+import { setToken, setUserId } from '../../../helpers'
 import { Auth_API, headerConfig } from '@/constant'
 
 const LoginPage = () => {
@@ -35,10 +35,11 @@ const LoginPage = () => {
         })
         .then(response => {
           // Navigation to homepage
-
-          // setUser(response.data.username)
+          setUser(response.data)
+          //console.log(response.data.userId)
           setToken(response.data.accessToken)
-          router.push('/movie')
+          setUserId(response.data.userId)
+          router.push('/')
           // Handle success.
           setSpinner(false)
         })

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 const MovieEpisodeList = movie => {
-  console.log(movie)
   const [movieEpisodes, setMovieEpisodes] = useState([])
 
   useEffect(() => {

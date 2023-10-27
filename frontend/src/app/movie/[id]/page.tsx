@@ -1,8 +1,11 @@
 'use client'
 import { Comment_API, Episode_API, Movie_API, headerConfig } from '@/constant'
+import { getToken, getUserId } from '@/helpers'
 import axios from 'axios'
-import { Button, Card, Spinner } from 'flowbite-react'
+import { Button, Card, Label, Spinner, TextInput } from 'flowbite-react'
+import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
+import * as Yup from 'yup'
 const MovideDetailPage = () => {
   const [episode, setEpisode] = useState(null)
   const [movie, setMovie] = useState(null)
@@ -10,7 +13,53 @@ const MovideDetailPage = () => {
   const [spinner, setSpinner] = useState(true)
   const currentUrl = window.location.href
   const lastSegment = currentUrl.split('/').pop()
+  const isLogin = getToken()
+  const userId = getUserId()
   const movieId = lastSegment
+
+  const formik = useFormik({
+    initialValues: {
+      commentContent: '',
+      rating: 1,
+      userId: userId,
+      movieId: movieId,
+    },
+    validationSchema: Yup.object({
+      commentContent: Yup.string().required('Required'),
+    }),
+    onSubmit: values => {
+      setSpinner(true)
+      axios
+        .post(`${Comment_API}/create`, values, {
+          headers: headerConfig,
+        })
+        .then(response => {
+          console.log(response)
+          handleFetchComment()
+          setSpinner(false)
+        })
+        .catch(error => {
+          // Handle error.
+          setSpinner(false)
+          console.log('An error occurred:', error.response)
+        })
+    },
+  })
+
+  const handleFetchComment = () => {
+    // Fetching Comment of movie
+    axios
+      .get(`${Comment_API}/movieId?movieId=${movieId}`, {
+        headers: headerConfig,
+      })
+      .then(response => {
+        // Navigation to homepage
+        setComments(response.data.data)
+      })
+      .catch(error => {
+        console.log('An error occurred:', error.response)
+      })
+  }
 
   useEffect(() => {
     // Fetching movie
@@ -41,19 +90,7 @@ const MovideDetailPage = () => {
         console.log('An error occurred:', error.response)
       })
 
-    // Fetching Comment of movie
-    axios
-      .get(`${Comment_API}/movieId?movieId=${movieId}`, {
-        headers: headerConfig,
-      })
-      .then(response => {
-        // Navigation to homepage
-        console.log(response.data.data)
-        setComments(response.data.data)
-      })
-      .catch(error => {
-        console.log('An error occurred:', error.response)
-      })
+    handleFetchComment()
   }, [])
 
   if (spinner) return <Spinner aria-label='Spinner button example' />
@@ -147,6 +184,63 @@ const MovideDetailPage = () => {
             ))}
           </ul>
         </div>
+      </Card>
+
+      <Card className='w-fit'>
+        <form onSubmit={formik.handleSubmit} className='grid grid-cols-5 gap-5'>
+          <TextInput
+            id='commentContent'
+            name='commentContent'
+            type='text'
+            placeholder='Enter your comment here'
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.commentContent}
+            className='col-span-4'
+          />
+          <input
+            id='rating'
+            name='rating'
+            type='number'
+            placeholder='Enter your password'
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.rating}
+            hidden
+          />
+          <input
+            id='userId'
+            name='userId'
+            type='number'
+            placeholder='Enter your password'
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.userId}
+            hidden
+          />
+          <input
+            id='movieId'
+            name='movieId'
+            type='number'
+            placeholder='Enter your password'
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.movieId}
+            hidden
+          />
+          <Button
+            type='submit'
+            color='dark'
+            size='sm'
+            className='w-fit col-span-1'
+          >
+            {isLogin ? (
+              <>Comment</>
+            ) : (
+              <a href='/auth/login'>Login to write comment</a>
+            )}
+          </Button>
+        </form>
       </Card>
     </div>
   )

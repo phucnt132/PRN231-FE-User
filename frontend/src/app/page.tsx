@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import {
   Avatar,
-  Button,
   Card,
   Carousel,
   Pagination,
@@ -11,9 +10,13 @@ import {
 } from '@douyinfe/semi-ui'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Movie_API, headerConfig } from '@/constant'
+import { Comment_API, Movie_API, headerConfig } from '@/constant'
 import Rating from '@/components/Rating/rating'
 import MovieEpisodeList from '@/components/MovieEpisodeList/MovieEpisodeList'
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
+import { Button, TextInput } from 'flowbite-react'
+import { useAuthContext } from '@/context/AuthContext'
 
 export interface Movie {
   movieId: number
@@ -46,7 +49,6 @@ export default function Home() {
         headers: headerConfig,
       })
       .then(response => {
-        console.log(response.data.data)
         setMovies(response.data.data)
         setSpinner(false)
       })
@@ -78,6 +80,8 @@ export default function Home() {
     setCurrentPage(newPage)
   }
 
+  const handleRouterPage = () => {}
+
   return (
     <main className='flex min-h-screen flex-col items-center justify-between'>
       <Carousel style={style} className='mx-0 !absolute' theme='dark'>
@@ -93,6 +97,7 @@ export default function Home() {
           )
         })}
       </Carousel>
+
       {/*  movie content */}
       <div className='grid grid-cols-5 gap-5 mb-6 pb-4 w-fit bg-gray-100 p-4 rounded mt-[420px]'>
         <div className='col-span-4'>
