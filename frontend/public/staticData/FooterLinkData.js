@@ -1,49 +1,36 @@
-export const FooterLinkData = [
-  {
-    title: 'About me',
-    navLink: [
-      {
-        title: 'Sharing Page',
-        url: '#',
-      },
-      {
-        title: 'Youtube',
-        url: '#',
-      },
-      {
-        title: 'Donation',
-        url: '#',
-      },
-    ],
+export const FooterLinkData = [{
+  title: 'Company',
+  navLink: [{
+    title: 'About',
+    url: '#',
   },
   {
-    title: 'Study with me',
-    navLink: [
-      {
-        title: 'Study Code',
-        url: '#',
-      },
-      {
-        title: 'Study Art',
-        url: '#',
-      },
-    ],
+    title: 'Service',
+    url: '#',
+  },
+  ],
+},
+{
+  title: 'Watching movie with us',
+  navLink: [{
+    title: 'View movies',
+    url: '/',
+  },],
+},
+{
+  title: 'Contact us',
+  navLink: [{
+    title: 'Facebook',
+    url: '#',
   },
   {
-    title: 'My Store',
-    navLink: [
-      {
-        title: 'Code Store',
-        url: '#',
-      },
-      {
-        title: 'Art Store',
-        url: '#',
-      },
-      {
-        title: 'Donation',
-        url: '#',
-      },
-    ],
+    title: 'Discord',
+    url: '#',
   },
+  {
+    title: 'Donation',
+    url: '#',
+  },
+  ],
+},
 ]

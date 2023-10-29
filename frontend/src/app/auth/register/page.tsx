@@ -9,7 +9,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useDeviceType from './../../../hooks/useDeviceType'
-import { API } from '../../../constant'
+import { API, Auth_API } from '../../../constant'
 import { useAuthContext } from '../../../context/AuthContext'
 import { setToken } from '../../../helpers'
 
@@ -38,11 +38,13 @@ const RegisterPage = () => {
     onSubmit: values => {
       setSpinner(true)
       axios
-        .post(`${API}/Auth/register`, values, {headers: {'Access-Control-Allow-Origin' : '*'}})
+        .post(`${API}/Auth/register`, values, {
+          headers: { 'Access-Control-Allow-Origin': '*' },
+        })
         .then(response => {
           // Navigation to homepage
-          setUser(response.data.user)
-          setToken(response.data.jwt)
+          console.log(response.data.data)
+          setUser(response.data)
           router.push('/')
           // Handle success.
           setSpinner(false)
@@ -58,7 +60,7 @@ const RegisterPage = () => {
   return (
     <>
       {deviceType == 'desktop' ? (
-        <div className='flex w-full gap-4 justify-center items-center mx-auto max-h-[100vh]'>
+        <div className='flex w-full gap-4 justify-center items-center mx-auto h-fit m-4 '>
           <form
             onSubmit={formik.handleSubmit}
             className='w-6/12 px-[100px] flex flex-col gap-2'
@@ -147,7 +149,7 @@ const RegisterPage = () => {
               </div>
             ) : null}
 
-            <div className='flex flex-col gap-2 my-2 items-end'>
+            <div className='flex flex-col gap-2 my-2 items-center'>
               <Link href='/auth/login' className='text-gray-500 italic text-sm'>
                 You already have account? Log in!
               </Link>
