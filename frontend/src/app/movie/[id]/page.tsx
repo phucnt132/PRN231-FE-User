@@ -4,10 +4,11 @@ import { getToken, getUserId } from '@/helpers'
 import axios from 'axios'
 import { Button, Card, Label, Spinner, TextInput } from 'flowbite-react'
 import { useFormik } from 'formik'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 const MovideDetailPage = () => {
-  const [episode, setEpisode] = useState(null)
+  const [episodes, setEpisode] = useState(null)
   const [movie, setMovie] = useState(null)
   const [comments, setComments] = useState([])
   const [spinner, setSpinner] = useState(true)
@@ -84,7 +85,6 @@ const MovideDetailPage = () => {
       })
       .then(response => {
         // Navigation to homepage
-        console.log(response.data)
         setEpisode(response.data.data)
       })
       .catch(error => {
@@ -137,8 +137,15 @@ const MovideDetailPage = () => {
 
           <div className='flex gap-4'>
             <p className='font-semibold'>Danh sách tập: </p>
-            <div>
-              <Button color='failure'>{movie.listEpisode}</Button>
+            <div className='flex gap-4'>
+              {
+                episodes?.map((item, idx) => 
+                  <Link href={`/${item.episodeId}`}>
+                    <Button color='failure'>{idx}</Button>
+                  </Link>
+                )
+              }
+   
             </div>
           </div>
         </div>
