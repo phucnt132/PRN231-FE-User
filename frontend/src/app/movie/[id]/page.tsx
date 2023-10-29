@@ -135,13 +135,13 @@ const MovideDetailPage = () => {
             <p>{movie?.releasedYear}</p>
           </div>
 
-          <div className='flex gap-4'>
+          <div className='flex gap-4 items-center'>
             <p className='font-semibold'>Danh sách tập: </p>
             <div className='flex gap-4'>
               {
                 episodes?.map((item, idx) => 
-                  <Link href={`/${item.episodeId}`}>
-                    <Button color='failure'>{idx}</Button>
+                  <Link href={`${movieId}/episode/${item.episodeId}`}>
+                    <Button color='failure'>{idx + 1}</Button>
                   </Link>
                 )
               }

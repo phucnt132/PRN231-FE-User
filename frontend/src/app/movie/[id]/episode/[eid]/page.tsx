@@ -4,26 +4,28 @@ import axios from 'axios'
 import { Button, Card, Spinner } from 'flowbite-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+
 const EpisodePage = () => {
   const [episode, setEpisode] = useState(null)
   const [episodes, setEpisodes] = useState(null)
   const [movie, setMovie] = useState(null)
-  const [spinner, setSpinner] = useState(true)
-  const currentUrl = typeof window == 'undefined' ? '' : window.location.href
-  const parts = currentUrl.split('/')
-  const movieId = parts[4]
-  const lastSegment = parts[6]
-  const episodeId = lastSegment
-
-  console.log(episodeId)
-
+  const [spinner, setSpinner] = useState(true)  
+  let movieId
+  let episodeId
+  
   useEffect(() => {
+    const currentUrl = typeof window == 'undefined' ? '' : window.location.href
+    const parts = currentUrl.split('/')
+    movieId = parts[4]
+    const lastSegment = parts[6]
+    episodeId = lastSegment
+
     axios
       .get(`${Movie_API}/id?id=${movieId}`, {
         headers: headerConfig,
       })
       .then(response => {
-        console.log(response.data.data)
+        console.log(movie)
         setMovie(response.data.data)
         setSpinner(false)
       })
@@ -37,7 +39,6 @@ const EpisodePage = () => {
         headers: headerConfig,
       })
       .then(response => {
-        console.log(response.data.data)
         console.log(response.data.data.mediaLink)
         setEpisode(response.data.data)
         setSpinner(false)
@@ -52,7 +53,6 @@ const EpisodePage = () => {
         headers: headerConfig,
       })
       .then(response => {
-        console.log(response.data.data)
         setEpisodes(response.data.data)
         setSpinner(false)
       })
@@ -62,21 +62,25 @@ const EpisodePage = () => {
       })
   }, [])
 
-  if (spinner) return <Spinner aria-label='Spinner button example' />
-  // Render UI
-  // Render UI
+  if (spinner)
+    return (
+      <div className='w-full h-[100vh] flex justify-center items-center'>
+        <Spinner className='' aria-label='Spinner button example' />
+      </div>
+    )
   return (
     <div className='flex flex-col gap-4 my-4'>
       {episode == null || movie == null ? (
         <Spinner aria-label='Spinner button example' />
       ) : (
         <>
-          <div>
-            {movie.movieName}
+          <div className='text-center font-semibold text-2xl'>
+            {movie.movieName}: {episode.episodeName}
           </div>
           <iframe
             width='854'
             height='480'
+            className='!w-full'
             src={`${episode.mediaLink}`}
             title='YouTube video player'
             frameborder='0'
@@ -85,16 +89,16 @@ const EpisodePage = () => {
           ></iframe>
         </>
       )}
-      <div className='flex gap-4'>
+      <div className='flex gap-4 items-center'>
         <p className='font-semibold'>Danh sách tập: </p>
         <div className='flex gap-4 flex-wrap'>
           {episodes == null ? (
             <Spinner aria-label='Spinner button example' />
           ) : (
             episodes?.map((item, idx) => (
-              <Link href={`${movieId}/episode/${item.episodeId}`}>
+              <Link href={`${item.episodeId}`}>
                 <Button key={idx} color='failure'>
-                  {item.episodeName}
+                  {idx + 1}
                 </Button>
               </Link>
             ))
