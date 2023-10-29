@@ -1,8 +1,13 @@
-import { AUTH_TOKEN, REFRESH_TOKEN } from './constant'
+import { AUTH_TOKEN, REFRESH_TOKEN, USER_ID } from './constant'
 
 export const getToken = () => {
   if (typeof window == 'undefined') return
   return localStorage.getItem(AUTH_TOKEN)
+}
+
+export const getUserId = () => {
+  if (typeof window == 'undefined') return
+  return localStorage.getItem(USER_ID)
 }
 
 export const getRefreshToken = () => {
@@ -17,6 +22,13 @@ export const setToken = token => {
   }
 }
 
+export const setUserId = userId => {
+  if (typeof window == 'undefined') return
+  if (userId) {
+    localStorage.setItem(USER_ID, userId)
+  }
+}
+
 export const setRefreshToken = refreshToken => {
   if (typeof window == 'undefined') return
   if (refreshToken) {
@@ -27,6 +39,11 @@ export const setRefreshToken = refreshToken => {
 export const removeToken = () => {
   if (typeof window == 'undefined') return
   localStorage.removeItem(AUTH_TOKEN)
+}
+
+export const removeUserId = () => {
+  if (typeof window == 'undefined') return
+  localStorage.removeItem(USER_ID)
 }
 
 export const removeRefreshToken = () => {

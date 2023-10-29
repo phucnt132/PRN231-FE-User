@@ -20,7 +20,9 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang='en'>
-        <body className={`${inter.className}`}>
+        <body
+          className={`${inter.className} px-[1rem] md:px-[2rem] lg:px-[3rem] xl:px-[10rem]`}
+        >
           <NavbarWithCTAButton />
           {children}
           <FooterWithSocialMediaIcons />

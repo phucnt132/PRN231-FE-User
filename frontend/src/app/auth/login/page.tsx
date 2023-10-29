@@ -9,7 +9,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useAuthContext } from '../../../context/AuthContext'
-import { setToken } from '../../../helpers'
+import { setToken, setUserId } from '../../../helpers'
 import { Auth_API, headerConfig } from '@/constant'
 
 const LoginPage = () => {
@@ -35,9 +35,10 @@ const LoginPage = () => {
         })
         .then(response => {
           // Navigation to homepage
-
-          // setUser(response.data.username)
+          setUser(response.data)
+          //console.log(response.data.userId)
           setToken(response.data.accessToken)
+          setUserId(response.data.userId)
           router.push('/')
           // Handle success.
           setSpinner(false)
@@ -53,7 +54,7 @@ const LoginPage = () => {
   return (
     <>
       {deviceType == 'desktop' ? (
-        <div className='flex w-full gap-4 justify-center items-center mx-auto max-h-[100vh]'>
+        <div className='flex w-full gap-4 justify-center items-center mx-auto h-fit m-4'>
           <form
             onSubmit={formik.handleSubmit}
             className='w-6/12 px-[100px] flex flex-col gap-2'
@@ -102,7 +103,7 @@ const LoginPage = () => {
               </div>
             ) : null}
 
-            <div className='flex flex-col gap-2 items-end'>
+            <div className='flex flex-row gap-2 items-center justify-center'>
               <Link
                 href='/auth/resetPassword'
                 className='text-gray-500 italic text-sm'

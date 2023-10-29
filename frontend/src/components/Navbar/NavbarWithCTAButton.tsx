@@ -2,7 +2,7 @@
 import { useAuthContext } from '../../context/AuthContext'
 import { useState } from 'react'
 import { NavigationBarData } from '../../../public/staticData/NavigationBarData'
-import { removeToken } from '../../helpers'
+import { removeToken, removeUserId } from '../../helpers'
 import { useRouter } from 'next/navigation'
 import useDeviceType from '../../hooks/useDeviceType'
 import { Nav, Dropdown, SideSheet } from '@douyinfe/semi-ui'
@@ -20,6 +20,7 @@ const NavbarWithCTAButton = () => {
 
   const handleLogout = () => {
     removeToken()
+    removeUserId()
     router.push('/auth/login')
   }
 

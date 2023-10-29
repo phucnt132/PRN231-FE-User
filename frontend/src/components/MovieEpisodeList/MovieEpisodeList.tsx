@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 const MovieEpisodeList = movie => {
-  console.log(movie.movie)
   const [movieEpisodes, setMovieEpisodes] = useState([])
 
   useEffect(() => {
@@ -44,8 +43,9 @@ const MovieEpisodeList = movie => {
             style={listItemStyle}
             className='text-gray-800 mt-4 hover:bg-gray-400 hover:text-white'
           >
-            <a href='#'></a>
-            {episode.movieName} - episodes {episode.totalEpisodes}
+            <a href={`/movie/${episode.movieId}`}>
+              {episode.movieName} - episodes {episode.totalEpisodes}
+            </a>
           </li>
         ))}
       </ul>
