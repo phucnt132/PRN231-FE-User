@@ -72,7 +72,7 @@ const EpisodePage = () => {
       ) : (
         <>
           <div>
-            {movie.movieName} tập {episode.episodeName}
+            {movie.movieName}
           </div>
           <iframe
             width='854'
