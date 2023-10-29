@@ -19,7 +19,7 @@ const MovideDetailPage = () => {
       })
       .then(response => {
         console.log(response.data)
-        setMovie(response.data)
+        setMovie(response.data.data)
         setSpinner(false)
       })
       .catch(error => {
@@ -29,12 +29,13 @@ const MovideDetailPage = () => {
 
     // Fetching Episode of movie
     axios
-      .get(`${Episode_API}/id?id=${movieId}`, {
+      .get(`${Episode_API}/movieId?movieId=${movieId}`, {
         headers: headerConfig,
       })
       .then(response => {
         // Navigation to homepage
-        setEpisode(response.data)
+        console.log(response.data)
+        setEpisode(response.data.data)
       })
       .catch(error => {
         console.log('An error occurred:', error.response)

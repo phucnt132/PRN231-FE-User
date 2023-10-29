@@ -9,7 +9,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useDeviceType from './../../../hooks/useDeviceType'
-import { API } from '../../../constant'
+import { API, Auth_API } from '../../../constant'
 import { useAuthContext } from '../../../context/AuthContext'
 import { setToken } from '../../../helpers'
 
@@ -38,11 +38,11 @@ const RegisterPage = () => {
     onSubmit: values => {
       setSpinner(true)
       axios
-        .post(`${API}/Auth/register`, values, {headers: {'Access-Control-Allow-Origin' : '*'}})
+        .post(`${Auth_API}/register`, values, {headers: {'Access-Control-Allow-Origin' : '*'}})
         .then(response => {
           // Navigation to homepage
-          setUser(response.data.user)
-          setToken(response.data.jwt)
+          console.log(response.data.data)
+          setUser(response.data)
           router.push('/')
           // Handle success.
           setSpinner(false)

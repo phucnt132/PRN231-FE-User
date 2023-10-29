@@ -38,7 +38,7 @@ const LoginPage = () => {
 
           // setUser(response.data.username)
           setToken(response.data.accessToken)
-          router.push('/movie')
+          router.push('/')
           // Handle success.
           setSpinner(false)
         })
