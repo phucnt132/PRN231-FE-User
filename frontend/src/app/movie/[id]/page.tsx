@@ -2,8 +2,12 @@
 import { Comment_API, Episode_API, Movie_API, headerConfig } from '@/constant'
 import { getToken, getUserId } from '@/helpers'
 import axios from 'axios'
+<<<<<<< HEAD
 import { Button, Card, Label, Spinner, TextInput } from 'flowbite-react'
 import { useFormik } from 'formik'
+=======
+import { Button, Card, Spinner } from 'flowbite-react'
+>>>>>>> origin/load-episode
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
@@ -78,16 +82,23 @@ const MovideDetailPage = () => {
         console.log('An error occurred:', error.response)
       })
 
-    // Fetching Episode of movie
+    // Fetching movie
     axios
       .get(`${Episode_API}/movieId?movieId=${movieId}`, {
         headers: headerConfig,
       })
       .then(response => {
+<<<<<<< HEAD
         // Navigation to homepage
         setEpisode(response.data.data)
+=======
+        console.log(response.data.data)
+        setEpisode(response.data.data)
+        setSpinner(false)
+>>>>>>> origin/load-episode
       })
       .catch(error => {
+        setSpinner(true)
         console.log('An error occurred:', error.response)
       })
 
@@ -98,7 +109,7 @@ const MovideDetailPage = () => {
   // Render UI
   return (
     <div className='flex flex-col gap-4 my-4'>
-      <h3 className='text-2xl font-semibold text-center'>{movie.movieName}</h3>
+      <h3 className='text-2xl font-semibold text-center'>{movie?.movieName}</h3>
       <div className='flex gap-4'>
         <div className='w-3/12'>
           <Card
@@ -106,37 +117,42 @@ const MovideDetailPage = () => {
             imgSrc={`${movie?.movieThumnailImage}`}
           >
             <h3 className='text-center font-semibold'>Số lượng tập</h3>
-            <Button color='purple'>{movie.totalEpisodes}</Button>
+            <Button color='purple'>{movie?.totalEpisodes}</Button>
           </Card>
         </div>
         <div className='w-9/12 flex flex-col gap-2'>
           <div className='flex gap-4'>
             <p className='font-semibold'>Tên khác: </p>
-            <p>{movie.aliasName}</p>
+            <p>{movie?.aliasName}</p>
           </div>
 
           <div className='flex gap-4'>
             <p className='font-semibold'>Đạo diễn: </p>
-            <p>{movie.director}</p>
+            <p>{movie?.director}</p>
           </div>
 
           <div className='flex gap-4'>
             <p className='font-semibold'>Các nhân vật: </p>
-            <p>{movie.mainCharacters}</p>
+            <p>{movie?.mainCharacters}</p>
           </div>
 
           <div className='flex gap-4'>
             <p className='font-semibold min-w-[6rem]'>Mô tả phim: </p>
+<<<<<<< HEAD
             <p className='overflow-y-scroll h-36'>{movie.description}</p>
+=======
+            <p className=''>{movie?.description}</p>
+>>>>>>> origin/load-episode
           </div>
 
           <div className='flex gap-4'>
             <p className='font-semibold'>Năm sản xuất: </p>
-            <p>{movie.releasedYear}</p>
+            <p>{movie?.releasedYear}</p>
           </div>
 
           <div className='flex gap-4'>
             <p className='font-semibold'>Danh sách tập: </p>
+<<<<<<< HEAD
             <div className='flex gap-4'>
               {
                 episodes?.map((item, idx) => 
@@ -146,6 +162,18 @@ const MovideDetailPage = () => {
                 )
               }
    
+=======
+            <div className='flex gap-4 flex-wrap'>
+              {episodes==null ? (
+                <Spinner aria-label='Spinner button example' />
+              ) : (
+                episodes?.map((item, idx) => (
+                  <Link href={`${movieId}/episode/${item.episodeId}`}>
+                  <Button key={idx} color='failure'>{item.episodeName}</Button>
+                  </Link>
+                ))
+              )}
+>>>>>>> origin/load-episode
             </div>
           </div>
         </div>
