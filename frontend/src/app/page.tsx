@@ -132,15 +132,21 @@ export default function Home() {
       </div>
 
       {/*  episode content */}
-      <div className=' mb-6 mt-10 w-full h-full rounded text-primary text-2xl'>
+      <div className=' mb-6 mt-10 w-full h-full rounded'>
         <div className='mb-6 text-primary text-2xl'>
           <h3 className='w-fit font-bold rounded text-gray-600'>
-            Episode lastest
+            Latest Episode
           </h3>
         </div>
-        <div>
-          <MovieSwiper movies={movies} />
-        </div>
+        {spinner ? (
+          <div className='grid col-span-5 justify-center gap-4'>
+            <Spin size='middle' tip='Loading...'></Spin>
+          </div>
+        ) : (
+          <div>
+            <MovieSwiper movies={movies} />
+          </div>
+        )}
       </div>
 
       {/*  movie content */}
@@ -156,25 +162,26 @@ export default function Home() {
               </div>
             ) : (
               currentMovies.map((movie, index) => (
-                <Card
-                  style={{ maxWidth: 200 }}
-                  cover={
-                    <img
-                      alt='example'
-                      src={movie.moviePoster}
-                      className='h-48 object-cover'
-                    />
-                  }
-                  className='hover:scale-125 transition ease-out duration-500 cursor-pointer'
+                <a
+                  href={`/movie/${movie.movieId}`}
+                  className='hover:text-blue-600 text-gray-800 font-bold'
                 >
-                  <a
-                    href={`/movie/${movie.movieId}`}
-                    className='hover:text-blue-600 text-gray-800 font-bold'
+                  <Card
+                    style={{ maxWidth: 200 }}
+                    cover={
+                      <img
+                        alt='example'
+                        src={movie.moviePoster}
+                        className='h-48 object-cover'
+                      />
+                    }
+                    className='hover:scale-125 transition ease-out duration-500 cursor-pointer'
                   >
                     {movie.movieName}
-                  </a>
-                  <p className='mt-3 text-xs'>{movie.aliasName}</p>
-                </Card>
+
+                    <p className='mt-3 text-xs'>{movie.aliasName}</p>
+                  </Card>
+                </a>
               ))
             )}
           </div>
