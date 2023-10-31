@@ -1,49 +1,38 @@
 'use client'
-import Link from 'next/link'
-import {
-  Avatar,
-  Card,
-  Carousel,
-  Pagination,
-  Space,
-  Typography,
-} from '@douyinfe/semi-ui'
+import { Card, Pagination } from '@douyinfe/semi-ui'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Comment_API, Movie_API, headerConfig } from '@/constant'
-import Rating from '@/components/Rating/rating'
+import { Movie_API, headerConfig } from '@/constant'
 import MovieEpisodeList from '@/components/MovieEpisodeList/MovieEpisodeList'
-import * as Yup from 'yup'
-import { useFormik } from 'formik'
-import { Button, TextInput } from 'flowbite-react'
-import { useAuthContext } from '@/context/AuthContext'
-
-export interface Movie {
-  movieId: number
-  postedByUser: number
-  movieName: string
-  movieThumnailImage: string
-  moviePoster: string
-  listEpisode: string
-  totalEpisodes: number
-  description: string
-  releasedYear: string
-  aliasName: string
-  director: string
-  mainCharacters: string
-  trailer?: string
-  comments?: string
-  isActive: boolean
-}
+import { Movie } from '@/context/AuthContext'
+import { Spin } from '@douyinfe/semi-ui'
+import { IconClock } from '@douyinfe/semi-icons'
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([])
+  const [movieBanner, setMovieBanner] = useState<Movie>()
   const [spinner, setSpinner] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const moviesPerPage = 5
 
   useEffect(() => {
-    // Fetching movie
+    //Fetch movie
+    axios
+      .get(`${Movie_API}/id?id=8`, {
+        headers: headerConfig,
+      })
+      .then(response => {
+        console.log(response.data.data)
+        setMovieBanner(response.data.data)
+        setSpinner(false)
+      })
+      .catch(error => {
+        setSpinner(true)
+        console.log('An error occurred:', error.response)
+      })
+
+    setSpinner(true)
+    // Fetching movies
     axios
       .get(`${Movie_API}`, {
         headers: headerConfig,
@@ -58,18 +47,6 @@ export default function Home() {
       })
   }, [])
 
-  const { Meta } = Card
-
-  const style = {
-    width: '100%',
-    height: '400px',
-  }
-
-  const imgList = [
-    'https://pic-bstarstatic.akamaized.net/ugc/73e8e097b338e8b85ea5f035a4273a442c708fa0.jpg',
-    'https://misskick.vn/wp-content/uploads/2023/08/top-phim-bo-my-hay-nhat-2020-8-800x450-1.png',
-  ]
-
   const totalMovies = movies.length
   const totalPages = Math.ceil(totalMovies / moviesPerPage)
   const lastMovieIndex = currentPage * moviesPerPage
@@ -80,50 +57,117 @@ export default function Home() {
     setCurrentPage(newPage)
   }
 
-  const handleRouterPage = () => {}
-
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between'>
-      <Carousel style={style} className='mx-0 !absolute' theme='dark'>
-        {imgList.map((src, index) => {
-          return (
-            <div
-              key={index}
-              style={{
-                backgroundSize: 'cover',
-                backgroundImage: `url(${src})`,
-              }}
-            ></div>
-          )
-        })}
-      </Carousel>
+    <main className='flex min-h-screen flex-col items-center justify-between bg-opacity-80'>
+      <div className='relative w-[100%] mt-5 h-[500px] bg-gray-300 rounded-[56px]'>
+        {spinner ? (
+          <div className='flex mt-[20%] justify-center items-center gap-4'>
+            <Spin aria-label='Spinner button example' />
+          </div>
+        ) : (
+          <img
+            src={movieBanner.movieThumnailImage}
+            className='w-full h-full object-fill rounded-[56px] bg-gray-900/50'
+          />
+        )}
+        <div className='absolute inset-0 bg-gradient-to-tr from-gray-900 to-gray rounded-[56px]'></div>
+        <div className='flex justify-between items-center bg-gray-900/75 rounded-[20px] absolute top-12 left-16 text-white'>
+          {spinner ? (
+            <div className='flex justify-center items-center gap-4'>
+              <Spin aria-label='Spinner button example' />
+            </div>
+          ) : (
+            <span className='px-2'>
+              {movieBanner.totalEpisodes}XP / episode
+            </span>
+          )}
+        </div>
+        <div className='flex flex-col justify-between absolute bottom-16 left-16 text-white'>
+          <div className='rounded-2xl px-2 font-bold flex-1 mb-6 text-5xl'>
+            {spinner ? (
+              <div className='flex justify-center items-center gap-4'>
+                <Spin aria-label='Spinner button example' />
+              </div>
+            ) : (
+              <span>{movieBanner.movieName}</span>
+            )}
+          </div>
+          <div className='rounded-2xl px-2 py-1 flex-1 mb-6'>
+            {spinner ? (
+              <div className='flex justify-center items-center gap-4'>
+                <Spin aria-label='Spinner button example' />
+              </div>
+            ) : (
+              <>
+                <span>
+                  {movieBanner.aliasName} -{' '}
+                  {movieBanner.categories.map((cate, index) => cate)}
+                </span>
+                <div>
+                  <IconClock />
+                  <span className='ml-3'>
+                    {movieBanner.totalEpisodes} episode
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
+          <div className='bg-orange-500 text-center w-fit px-7 py-3 rounded-2xl hover:scale-125 transition ease-out duration-500'>
+            <a href={'/movie/8'}>Watch</a>
+          </div>
+        </div>
+      </div>
 
-      {/*  movie content */}
-      <div className='grid grid-cols-5 gap-5 mb-6 pb-4 w-fit bg-gray-100 p-4 rounded mt-[420px]'>
-        <div className='col-span-4'>
+      {/*  episode content */}
+      <div className='grid grid-cols-5 gap-5 mb-6 mt-10 pb-4 w-full h-full p-4 rounded'>
+        <div className='col-span-5'>
           <div className='mb-6 pb-4 border-b border-primary text-primary text-2xl'>
             <h3 className='bg-red-600 w-fit p-1 rounded text-white'>
-              New Movie
+              Episode lastest
             </h3>
           </div>
           <div className='grid grid-cols-5 gap-10 mb-6 pb-4'>
             {currentMovies.map((movie, index) => (
-              <Card
-                style={{ maxWidth: 200 }}
-                cover={
-                  <img alt='example' src={movie.moviePoster} className='h-60' />
-                }
-              >
-                {/* <Meta className='text-center' title={movie.movieName} /> */}
-                <a
-                  href={`/movie/${movie.movieId}`}
-                  className='hover:text-blue-600 text-gray-800 font-bold'
-                >
-                  {movie.movieName}
-                </a>
-                <p className='mt-3 text-xs'>{movie.aliasName}</p>
-              </Card>
+              <MovieEpisodeList movie={movie} />
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/*  movie content */}
+      <div className='grid grid-cols-5 gap-5 mb-6 mt-10 w-full h-full rounded'>
+        <div className='col-span-5'>
+          <div className='mb-6 text-primary text-2xl'>
+            <h3 className='w-fit font-bold rounded text-gray-600'>New Movie</h3>
+          </div>
+          <div className='grid sm:grid-cols-2 sm:justify-center sm:gap-5 md:grid-cols-3 lg:grid-cols-5 gap-x-10 mb-6 pb-4'>
+            {spinner ? (
+              <div className='grid col-span-5 justify-center gap-4'>
+                <Spin size='middle' tip='Loading...'></Spin>
+              </div>
+            ) : (
+              currentMovies.map((movie, index) => (
+                <Card
+                  style={{ maxWidth: 200 }}
+                  cover={
+                    <img
+                      alt='example'
+                      src={movie.moviePoster}
+                      className='h-48 object-cover'
+                    />
+                  }
+                  className='hover:scale-125 transition ease-out duration-500 cursor-pointer'
+                >
+                  <a
+                    href={`/movie/${movie.movieId}`}
+                    className='hover:text-blue-600 text-gray-800 font-bold'
+                  >
+                    {movie.movieName}
+                  </a>
+                  <p className='mt-3 text-xs'>{movie.aliasName}</p>
+                </Card>
+              ))
+            )}
           </div>
           <div className='flex justify-center'>
             <Pagination
@@ -133,9 +177,6 @@ export default function Home() {
               style={{ marginBottom: 12 }}
             />
           </div>
-        </div>
-        <div className='col-span-1'>
-          <MovieEpisodeList movie={movies} />
         </div>
       </div>
     </main>
