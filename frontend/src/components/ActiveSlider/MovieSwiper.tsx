@@ -1,9 +1,9 @@
 import React, { useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import 'swiper/css/navigation' 
-import 'swiper/css/pagination' 
-import Pagination from 'swiper' 
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import Pagination from 'swiper'
 
 const MovieSwiper = ({ movies }) => {
   const swiperOptions = {
@@ -11,13 +11,13 @@ const MovieSwiper = ({ movies }) => {
     spaceBetween: 15,
     freeMode: true,
     navigation: {
-      nextEl: '.swiper-button-next', 
-      prevEl: '.swiper-button-prev', 
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
     },
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
-    }
+    },
   }
   const swiperRef = useRef(null)
 
@@ -34,14 +34,14 @@ const MovieSwiper = ({ movies }) => {
   }
 
   return (
-    <div className='h-[300px] w-4/5 mx-auto'>
+    <div className='h-[300px] w-full mx-auto'>
       <Swiper
         {...swiperOptions}
         onSwiper={swiper => (swiperRef.current = swiper)}
       >
         {movies.map(movie => (
           <SwiperSlide key={movie.movieId}>
-            <div className='group relative shadow-lg text-white rounded-xl p-6 w-[200px] h-[300px] overflow-hidden cursor-pointer mx-2'>
+            <div className='group relative shadow-lg text-white rounded-xl p-6 w-full h-[300px] overflow-hidden cursor-pointer mx-2'>
               <div
                 className='absolute inset-0 bg-cover bg-center'
                 style={{ backgroundImage: `url(${movie.moviePoster})` }}
@@ -55,6 +55,9 @@ const MovieSwiper = ({ movies }) => {
                 <div className='w-[35px] h-[35px] text-white group-hover:text-blue-500 group-hover:rotate-45 duration-100'>
                   &rarr;
                 </div>
+              </div>
+              <div className='absolute top-1 left-1 p-2 text-lg font-bold bg-black opacity-60 text-white rounded-full'>
+                {movie.totalEpisodes}/{movie.totalEpisodes}
               </div>
             </div>
           </SwiperSlide>

@@ -138,13 +138,11 @@ const MovideDetailPage = () => {
           <div className='flex gap-4 items-center'>
             <p className='font-semibold'>Danh sách tập: </p>
             <div className='flex gap-4'>
-              {
-                episodes?.map((item, idx) => 
-                  <Link href={`${movieId}/episode/${item.episodeId}`}>
-                    <Button color='failure'>{idx + 1}</Button>
-                  </Link>
-                )
-              }
+              {episodes?.map((item, idx) => (
+                <Link href={`${movieId}/episode/${item.episodeId}`}>
+                  <Button color='failure'>{idx + 1}</Button>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -244,7 +242,7 @@ const MovideDetailPage = () => {
             {isLogin ? (
               <>Comment</>
             ) : (
-              <a href='/auth/login'>Login to write comment</a>
+              <Link href='/auth/login'>Login to write comment</Link>
             )}
           </Button>
         </form>
