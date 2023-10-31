@@ -3,11 +3,10 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import Pagination from 'swiper'
 
 const MovieSwiper = ({ movies }) => {
   const swiperOptions = {
-    slidesPerView: 5,
+    slidesPerView: 4,
     spaceBetween: 15,
     freeMode: true,
     navigation: {

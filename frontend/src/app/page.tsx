@@ -155,7 +155,7 @@ export default function Home() {
           <div className='mb-6 text-primary text-2xl'>
             <h3 className='w-fit font-bold rounded text-gray-600'>New Movie</h3>
           </div>
-          <div className='grid sm:grid-cols-2 sm:justify-center sm:gap-5 md:grid-cols-3 lg:grid-cols-5 gap-x-10 mb-6 pb-4'>
+          <div className='grid sm:grid-cols-2 sm:justify-center md:grid-cols-3 lg:grid-cols-5 gap-x-10 mb-6 pb-4'>
             {spinner ? (
               <div className='grid col-span-5 justify-center gap-4'>
                 <Spin size='middle' tip='Loading...'></Spin>
