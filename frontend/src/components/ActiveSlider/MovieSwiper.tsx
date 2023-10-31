@@ -57,7 +57,7 @@ const MovieSwiper = ({ movies }) => {
                 </div>
               </div>
               <div className='absolute top-1 left-1 p-2 text-lg font-bold bg-black opacity-60 text-white rounded-full'>
-                {movie.totalEpisodes}/{movie.totalEpisodes}
+                {movie.totalEpisodes}
               </div>
             </div>
           </SwiperSlide>

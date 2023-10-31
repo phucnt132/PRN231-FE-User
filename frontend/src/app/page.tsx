@@ -3,7 +3,6 @@ import { Card, Pagination } from '@douyinfe/semi-ui'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Movie_API, headerConfig } from '@/constant'
-import MovieEpisodeList from '@/components/MovieEpisodeList/MovieEpisodeList'
 import { Movie } from '@/context/AuthContext'
 import { Spin } from '@douyinfe/semi-ui'
 import { IconClock } from '@douyinfe/semi-icons'
@@ -11,6 +10,7 @@ import MovieSwiper from '@/components/ActiveSlider/MovieSwiper'
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([])
+  const [moviesNew, setMoviesNew] = useState<Movie[]>([])
   const [movieBanner, setMovieBanner] = useState<Movie>()
   const [spinner, setSpinner] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -23,7 +23,6 @@ export default function Home() {
         headers: headerConfig,
       })
       .then(response => {
-        console.log(response.data.data)
         setMovieBanner(response.data.data)
         setSpinner(false)
       })
@@ -32,7 +31,6 @@ export default function Home() {
         console.log('An error occurred:', error.response)
       })
 
-    setSpinner(true)
     // Fetching movies
     axios
       .get(`${Movie_API}`, {
@@ -46,13 +44,27 @@ export default function Home() {
         setSpinner(true)
         console.log('An error occurred:', error.response)
       })
+
+    // Fetching new movies
+    axios
+      .get(`${Movie_API}/new`, {
+        headers: headerConfig,
+      })
+      .then(response => {
+        setMoviesNew(response.data.data)
+        setSpinner(false)
+      })
+      .catch(error => {
+        setSpinner(true)
+        console.log('An error occurred:', error.response)
+      })
   }, [])
 
-  const totalMovies = movies.length
+  const totalMovies = moviesNew.length
   const totalPages = Math.ceil(totalMovies / moviesPerPage)
   const lastMovieIndex = currentPage * moviesPerPage
   const firstMovieIndex = lastMovieIndex - moviesPerPage
-  const currentMovies = movies.slice(firstMovieIndex, lastMovieIndex)
+  const currentMovies = moviesNew.slice(firstMovieIndex, lastMovieIndex)
 
   const handlePageChange = newPage => {
     setCurrentPage(newPage)
@@ -120,15 +132,17 @@ export default function Home() {
       </div>
 
       {/*  episode content */}
-      <div className=' mb-6 mt-10 pb-4 w-full h-full p-4 rounded'>
-      <div className='mb-6 text-primary text-2xl'>
-            <h3 className='w-fit font-bold rounded text-gray-600'>New Movie</h3>
-          </div>
-       <div>
-        <MovieSwiper movies={movies} />
+      <div className=' mb-6 mt-10 w-full h-full rounded text-primary text-2xl'>
+        <div className='mb-6 text-primary text-2xl'>
+          <h3 className='w-fit font-bold rounded text-gray-600'>
+            Episode lastest
+          </h3>
+        </div>
+        <div>
+          <MovieSwiper movies={movies} />
+        </div>
       </div>
-      </div>
-      
+
       {/*  movie content */}
       <div className='grid grid-cols-5 gap-5 mb-6 mt-10 w-full h-full rounded'>
         <div className='col-span-5'>
