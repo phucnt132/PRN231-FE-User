@@ -17,6 +17,7 @@ import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { Button, TextInput } from 'flowbite-react'
 import { useAuthContext } from '@/context/AuthContext'
+import MovieSwiper from '@/components/ActiveSlider/MovieSwiper'
 
 export interface Movie {
   movieId: number
