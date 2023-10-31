@@ -120,19 +120,22 @@ export default function Home() {
 
       {/*  episode content */}
       <div className=' mb-6 mt-10 w-full h-full rounded'>
-      <div className='mb-6 text-primary text-2xl'>
-            <h3 className='w-fit font-bold rounded text-gray-600'>Latest Episode</h3>
+        <div className='mb-6 text-primary text-2xl'>
+          <h3 className='w-fit font-bold rounded text-gray-600'>
+            Latest Episode
+          </h3>
+        </div>
+        {spinner ? (
+          <div className='grid col-span-5 justify-center gap-4'>
+            <Spin size='middle' tip='Loading...'></Spin>
           </div>
-          {spinner ? (
-              <div className='grid col-span-5 justify-center gap-4'>
-                <Spin size='middle' tip='Loading...'></Spin>
-              </div>
-            ) : (
-       <div>
-        <MovieSwiper movies={movies} />
-      </div>)}
+        ) : (
+          <div>
+            <MovieSwiper movies={movies} />
+          </div>
+        )}
       </div>
-      
+
       {/*  movie content */}
       <div className='grid grid-cols-5 gap-5 mb-6 mt-10 w-full h-full rounded'>
         <div className='col-span-5'>
@@ -146,6 +149,10 @@ export default function Home() {
               </div>
             ) : (
               currentMovies.map((movie, index) => (
+                <a
+                    href={`/movie/${movie.movieId}`}
+                    className='hover:text-blue-600 text-gray-800 font-bold'
+                  >
                 <Card
                   style={{ maxWidth: 200 }}
                   cover={
@@ -157,14 +164,12 @@ export default function Home() {
                   }
                   className='hover:scale-125 transition ease-out duration-500 cursor-pointer'
                 >
-                  <a
-                    href={`/movie/${movie.movieId}`}
-                    className='hover:text-blue-600 text-gray-800 font-bold'
-                  >
+                  
                     {movie.movieName}
-                  </a>
+                 
                   <p className='mt-3 text-xs'>{movie.aliasName}</p>
                 </Card>
+                </a>
               ))
             )}
           </div>
