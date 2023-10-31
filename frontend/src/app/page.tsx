@@ -33,7 +33,6 @@ export default function Home() {
       })
 
     setSpinner(true)
-    // Fetching movies
     axios
       .get(`${Movie_API}`, {
         headers: headerConfig,
@@ -120,13 +119,18 @@ export default function Home() {
       </div>
 
       {/*  episode content */}
-      <div className=' mb-6 mt-10 pb-4 w-full h-full p-4 rounded'>
+      <div className=' mb-6 mt-10 w-full h-full rounded'>
       <div className='mb-6 text-primary text-2xl'>
-            <h3 className='w-fit font-bold rounded text-gray-600'>New Movie</h3>
+            <h3 className='w-fit font-bold rounded text-gray-600'>Latest Episode</h3>
           </div>
+          {spinner ? (
+              <div className='grid col-span-5 justify-center gap-4'>
+                <Spin size='middle' tip='Loading...'></Spin>
+              </div>
+            ) : (
        <div>
         <MovieSwiper movies={movies} />
-      </div>
+      </div>)}
       </div>
       
       {/*  movie content */}

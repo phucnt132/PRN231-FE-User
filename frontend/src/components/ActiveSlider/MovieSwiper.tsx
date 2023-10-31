@@ -42,23 +42,28 @@ const MovieSwiper = ({ movies }) => {
         {movies.map(movie => (
           <SwiperSlide key={movie.movieId}>
             <div className='group relative shadow-lg text-white rounded-xl p-6 w-full h-[300px] overflow-hidden cursor-pointer mx-2'>
-              <div
-                className='absolute inset-0 bg-cover bg-center'
-                style={{ backgroundImage: `url(${movie.moviePoster})` }}
-              />
-              <div className='absolute inset-0 group-hover:opacity-30' />
-              <div className='absolute bottom-0 left-0 p-4'>
-                <h1 className='text-xl font-bold'>{movie.movieName}</h1>
-                <p className='text-lg'>{movie.aliasName}</p>
-              </div>
-              <div className='absolute top-0 right-0 p-4'>
-                <div className='w-[35px] h-[35px] text-white group-hover:text-blue-500 group-hover:rotate-45 duration-100'>
-                  &rarr;
+              <a
+                href={`/movie/${movie.movieId}/episode/${movie.totalEpisodes}`}
+                className='hover:text-blue-600 text-white font-bold'
+              >
+                <div
+                  className='absolute inset-0 bg-cover bg-center'
+                  style={{ backgroundImage: `url(${movie.moviePoster})` }}
+                />
+                <div className='absolute inset-0 group-hover:opacity-30' />
+                <div className='absolute bottom-0 left-0 p-4'>
+                  <h1 className='text-xl font-bold'>{movie.movieName}</h1>
+                  <p className='text-lg'>{movie.aliasName}</p>
                 </div>
-              </div>
-              <div className='absolute top-1 left-1 p-2 text-lg font-bold bg-black opacity-60 text-white rounded-full'>
-                {movie.totalEpisodes}/{movie.totalEpisodes}
-              </div>
+                <div className='absolute top-0 right-0 p-4'>
+                  <div className='w-[35px] h-[35px] text-white group-hover:text-blue-500 group-hover:rotate-45 duration-100'>
+                    &rarr;
+                  </div>
+                </div>
+                <div className='absolute top-1 left-1 p-2 text-lg font-bold bg-black opacity-60 text-white rounded-full'>
+                  {movie.totalEpisodes}/?
+                </div>
+              </a>
             </div>
           </SwiperSlide>
         ))}
