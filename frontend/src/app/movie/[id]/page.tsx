@@ -1,4 +1,5 @@
 'use client'
+import Rating from '@/components/Rating/rating'
 import { Comment_API, Episode_API, Movie_API, headerConfig } from '@/constant'
 import { getToken, getUserId } from '@/helpers'
 import axios from 'axios'
@@ -20,7 +21,7 @@ const MovideDetailPage = () => {
   const isLogin = getToken()
   const userId = getUserId()
   const movieId = lastSegment ? lastSegment : useParams().id;
-
+  const [rating, setRating] = useState(1);
   const formik = useFormik({
     initialValues: {
       commentContent: '',
@@ -49,7 +50,10 @@ const MovideDetailPage = () => {
         })
     },
   })
-
+  const updateRating = newRating => {
+    setRating(newRating);
+    formik.setFieldValue('rating', newRating); // Update the formik value
+  };
   const handleFetchComment = () => {
     // Fetching Comment of movie
     axios
@@ -204,16 +208,7 @@ const MovideDetailPage = () => {
             value={formik.values.commentContent}
             className='col-span-4'
           />
-          <input
-            id='rating'
-            name='rating'
-            type='number'
-            placeholder='Enter your password'
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.rating}
-            hidden
-          />
+          <Rating updateRating={updateRating} />
           <input
             id='userId'
             name='userId'

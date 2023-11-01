@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { FaStar } from 'react-icons/fa';
 import './rating.css';
-const RatingSystem = () => {
+const RatingSystem = ({ updateRating }) => {
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
-
-    const handleRatingClick = (currentRating) => {
-        setRating(currentRating);
+  
+    const handleRatingClick = currentRating => {
+      setRating(currentRating);
+      updateRating(currentRating); // Call the callback function to update the formik state
     };
 
     const handleRatingSubmit = () => {
@@ -56,23 +57,15 @@ const RatingSystem = () => {
                     </label>
                 );
             })}
-            <p>Your rating is {rating}</p>
-            <button
-            type="submit"
-                className="submit-button"
-                onClick={handleRatingSubmit}
-            >
-                Submit Rating
-            </button>
         </div>
         </form>
     );
 }
 
-export default function Rating() {
+export default function Rating({ updateRating }) {
     return (
-        <div>
-            <RatingSystem />
-        </div>
+      <div>
+        <RatingSystem updateRating={updateRating} /> {/* Pass the callback function to RatingSystem */}
+      </div>
     );
-}
+  }
