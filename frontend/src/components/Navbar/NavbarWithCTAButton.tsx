@@ -11,6 +11,7 @@ import { FiMenu } from 'react-icons/fi'
 import { Button } from 'flowbite-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { replace } from 'formik'
 
 const NavbarWithCTAButton = () => {
   const { user } = useAuthContext()
@@ -37,7 +38,11 @@ const NavbarWithCTAButton = () => {
         mode={'horizontal'}
         header={{
           text: (
-            <Link href='/' className='text-xl !text-light-content-neutral-1'>
+            <Link
+              href='/'
+              replace
+              className='text-xl !text-light-content-neutral-1'
+            >
               HighFlix
             </Link>
           ),

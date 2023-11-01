@@ -44,7 +44,7 @@ const MovieSwiper = ({ movies }) => {
         headers: headerConfig,
       })
       .then(response => {
-        console.log(response);
+        console.log(response)
         router.push(
           `/movie/${response.data.data.movieId}/episode/${response.data.data.episodeId}`,
         )
@@ -62,7 +62,7 @@ const MovieSwiper = ({ movies }) => {
       >
         {movies.map(movie => (
           <SwiperSlide key={movie.movieId}>
-            <div className='group relative shadow-lg text-white rounded-xl p-6 w-full h-[300px] overflow-hidden cursor-pointer mx-2'>
+            <div className='group relative shadow-lg text-white rounded-xl p-6 w-full h-[300px] overflow-hidden cursor-pointer'>
               <a
                 type='button'
                 //href={`/movie/${movie.movieId}/episode/${movie.totalEpisodes}`}
@@ -84,7 +84,7 @@ const MovieSwiper = ({ movies }) => {
                   </div>
                 </div>
                 <div className='absolute top-1 left-1 p-2 text-lg font-bold bg-black opacity-60 text-white rounded-full'>
-                  {movie.totalEpisodes}/?
+                  Lastest Ep
                 </div>
               </a>
             </div>

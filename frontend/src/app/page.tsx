@@ -129,34 +129,38 @@ export default function Home() {
             )}
           </div>
           <div className='bg-orange-500 text-center w-fit px-7 py-3 rounded-2xl hover:scale-125 transition ease-out duration-500'>
-            <a href={'/movie/8'}>Watch</a>
+            <Link href={'/movie/8'} replace>
+              Watch
+            </Link>
           </div>
         </div>
       </div>
 
       {/*  episode content */}
       <div className=' mb-6 mt-10 w-full h-full rounded'>
-        <div className='mb-6 text-primary text-2xl'>
-          <h3 className='w-fit font-bold rounded text-gray-600'>
-            Latest Episode
+        <div className='grid grid-cols-6 mb-6 text-primary text-2xl'>
+          <h3 className='col-span-1 w-fit font-bold rounded text-gray-600'>
+            Lastest Episode
           </h3>
+          <hr className='col-span-5 ml-2 border-2 rounded mt-4'></hr>
         </div>
         {spinner ? (
           <div className='grid col-span-5 justify-center gap-4'>
             <Spin size='middle' tip='Loading...'></Spin>
           </div>
         ) : (
-          <div>
-            <MovieSwiper movies={movies} />
-          </div>
+          <MovieSwiper movies={movies} />
         )}
       </div>
 
       {/*  movie content */}
       <div className='grid grid-cols-5 gap-5 mb-6 mt-10 w-full h-full rounded'>
         <div className='col-span-5'>
-          <div className='mb-6 text-primary text-2xl'>
-            <h3 className='w-fit font-bold rounded text-gray-600'>New Movie</h3>
+          <div className='grid grid-cols-8 mb-6 text-primary text-2xl'>
+            <h3 className='col-span-1 w-fit font-bold rounded text-gray-600'>
+              New Movie
+            </h3>
+            <hr className='col-span-7 border-2 rounded mt-4'></hr>
           </div>
           <div className='grid sm:grid-cols-2 sm:justify-center md:grid-cols-3 lg:grid-cols-5 gap-x-10 mb-6 pb-4'>
             {spinner ? (
@@ -181,7 +185,7 @@ export default function Home() {
                     }
                     className='hover:scale-125 transition ease-out duration-500 cursor-pointer'
                   >
-                    {movie?.movieName}
+                    <p className='truncate'>{movie?.movieName}</p>
 
                     <p className='mt-3 text-xs'>{movie?.aliasName}</p>
                   </Card>
