@@ -9,10 +9,10 @@ const EpisodePage = () => {
   const [episode, setEpisode] = useState(null)
   const [episodes, setEpisodes] = useState(null)
   const [movie, setMovie] = useState(null)
-  const [spinner, setSpinner] = useState(true)  
+  const [spinner, setSpinner] = useState(true)
   let movieId
   let episodeId
-  
+
   useEffect(() => {
     const currentUrl = typeof window == 'undefined' ? '' : window.location.href
     const parts = currentUrl.split('/')
@@ -83,9 +83,9 @@ const EpisodePage = () => {
             className='!w-full'
             src={`${episode.mediaLink}`}
             title='YouTube video player'
-            frameborder='0'
+            //frameborder='0'
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-            allowfullscreen='true'
+            //allowfullscreen='true'
           ></iframe>
         </>
       )}
