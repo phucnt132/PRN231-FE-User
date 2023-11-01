@@ -5,6 +5,7 @@ import axios from 'axios'
 import { Button, Card, Label, Spinner, TextInput } from 'flowbite-react'
 import { useFormik } from 'formik'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 
@@ -13,11 +14,12 @@ const MovideDetailPage = () => {
   const [movie, setMovie] = useState(null)
   const [comments, setComments] = useState([])
   const [spinner, setSpinner] = useState(true)
-  const currentUrl = window.location.href
+  const currentUrl = window.location.href;
+  console.log("currentUrl: ", currentUrl);
   const lastSegment = currentUrl.split('/').pop()
   const isLogin = getToken()
   const userId = getUserId()
-  const movieId = lastSegment
+  const movieId = lastSegment ? lastSegment : useParams().id;
 
   const formik = useFormik({
     initialValues: {

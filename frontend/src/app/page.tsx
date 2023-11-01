@@ -7,6 +7,7 @@ import { Movie } from '@/context/AuthContext'
 import { Spin } from '@douyinfe/semi-ui'
 import { IconClock } from '@douyinfe/semi-icons'
 import MovieSwiper from '@/components/ActiveSlider/MovieSwiper'
+import Link from 'next/link'
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([])
@@ -79,7 +80,7 @@ export default function Home() {
           </div>
         ) : (
           <img
-            src={movieBanner.movieThumnailImage}
+            src={movieBanner?.movieThumnailImage}
             className='w-full h-full object-fill rounded-[3.5rem] bg-gray-900/50'
           />
         )}
@@ -91,7 +92,7 @@ export default function Home() {
             </div>
           ) : (
             <span className='px-2'>
-              {movieBanner.totalEpisodes}XP / episode
+              {movieBanner?.totalEpisodes}XP / episode
             </span>
           )}
         </div>
@@ -102,7 +103,7 @@ export default function Home() {
                 <Spin aria-label='Spinner button example' />
               </div>
             ) : (
-              <span>{movieBanner.movieName}</span>
+              <span>{movieBanner?.movieName}</span>
             )}
           </div>
           <div className='rounded-2xl px-2 py-1 flex-1 mb-6'>
@@ -113,13 +114,13 @@ export default function Home() {
             ) : (
               <>
                 <span>
-                  {movieBanner.aliasName} -{' '}
-                  {movieBanner.categories.map((cate, index) => cate)}
+                  {movieBanner?.aliasName} -{' '}
+                  {movieBanner?.categories.map((cate, index) => cate)}
                 </span>
                 <div>
                   <IconClock />
                   <span className='ml-3'>
-                    {movieBanner.totalEpisodes} episode
+                    {movieBanner?.totalEpisodes} episode
                   </span>
                 </div>
               </>
@@ -162,8 +163,9 @@ export default function Home() {
               </div>
             ) : (
               currentMovies.map((movie, index) => (
-                <a
-                  href={`/movie/${movie.movieId}`}
+                <Link
+                  href={`/movie/${movie?.movieId}`}
+                  replace
                   className='hover:text-blue-600 text-gray-800 font-bold'
                 >
                   <Card
@@ -171,17 +173,17 @@ export default function Home() {
                     cover={
                       <img
                         alt='example'
-                        src={movie.moviePoster}
+                        src={movie?.moviePoster}
                         className='h-48 object-cover'
                       />
                     }
                     className='hover:scale-125 transition ease-out duration-500 cursor-pointer'
                   >
-                    {movie.movieName}
+                    {movie?.movieName}
 
-                    <p className='mt-3 text-xs'>{movie.aliasName}</p>
+                    <p className='mt-3 text-xs'>{movie?.aliasName}</p>
                   </Card>
-                </a>
+                </Link>
               ))
             )}
           </div>
