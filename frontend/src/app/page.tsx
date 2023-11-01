@@ -25,6 +25,7 @@ export default function Home() {
       })
       .then(response => {
         setMovieBanner(response.data.data)
+        console.log(movieBanner)
         setSpinner(false)
       })
       .catch(error => {
@@ -38,6 +39,7 @@ export default function Home() {
         headers: headerConfig,
       })
       .then(response => {
+        console.log(response.data.data)
         setMovies(response.data.data)
         setSpinner(false)
       })
