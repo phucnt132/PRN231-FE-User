@@ -7,6 +7,7 @@ import { useFormik } from 'formik'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
+
 const MovideDetailPage = () => {
   const [episodes, setEpisode] = useState(null)
   const [movie, setMovie] = useState(null)
@@ -138,13 +139,11 @@ const MovideDetailPage = () => {
           <div className='flex gap-4 items-center'>
             <p className='font-semibold'>Danh sách tập: </p>
             <div className='flex gap-4'>
-              {
-                episodes?.map((item, idx) => 
-                  <Link href={`${movieId}/episode/${item.episodeId}`}>
-                    <Button color='failure'>{idx + 1}</Button>
-                  </Link>
-                )
-              }
+              {episodes?.map((item, idx) => (
+                <Link href={`${movieId}/episode/${item.episodeId}`}>
+                  <Button color='failure'>{idx + 1}</Button>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -177,11 +176,9 @@ const MovideDetailPage = () => {
                   </div>
                   <div className='min-w-0 flex-1'>
                     <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
-                      {comment.commentedDate}
+                      {new Date(comment.commentedDate).toLocaleDateString()}
                     </p>
-                    <p className='truncate text-sm font-medium text-gray-900 dark:text-white'>
-                      {comment.userId}
-                    </p>
+                    <p className='truncate text-sm font-medium text-gray-900 dark:text-white'></p>
                     <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
                       {comment.commentContent}
                     </p>
@@ -244,7 +241,7 @@ const MovideDetailPage = () => {
             {isLogin ? (
               <>Comment</>
             ) : (
-              <a href='/auth/login'>Login to write comment</a>
+              <Link href='/auth/login'>Login to write comment</Link>
             )}
           </Button>
         </form>
