@@ -3,8 +3,13 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import Link from 'next/link'
+import axios from 'axios'
+import { Episode_API, headerConfig } from '@/constant'
+import { useRouter } from 'next/navigation'
 
 const MovieSwiper = ({ movies }) => {
+  const router = useRouter()
   const swiperOptions = {
     slidesPerView: 4,
     spaceBetween: 15,
@@ -32,6 +37,23 @@ const MovieSwiper = ({ movies }) => {
     }
   }
 
+  const handleRouterPageEpisode = movieId => {
+    // Fetching new movies
+    axios
+      .get(`${Episode_API}/latestByMovie/${movieId}`, {
+        headers: headerConfig,
+      })
+      .then(response => {
+        console.log(response);
+        router.push(
+          `/movie/${response.data.data.movieId}/episode/${response.data.data.episodeId}`,
+        )
+      })
+      .catch(error => {
+        console.log('An error occurred:', error.response)
+      })
+  }
+
   return (
     <div className='h-[300px] w-full mx-auto'>
       <Swiper
@@ -42,7 +64,9 @@ const MovieSwiper = ({ movies }) => {
           <SwiperSlide key={movie.movieId}>
             <div className='group relative shadow-lg text-white rounded-xl p-6 w-full h-[300px] overflow-hidden cursor-pointer mx-2'>
               <a
-                href={`/movie/${movie.movieId}/episode/${movie.totalEpisodes}`}
+                type='button'
+                //href={`/movie/${movie.movieId}/episode/${movie.totalEpisodes}`}
+                onClick={() => handleRouterPageEpisode(movie.movieId)}
                 className='hover:text-blue-600 text-white font-bold'
               >
                 <div
