@@ -1,6 +1,8 @@
 'use client'
+import Rating from '@/components/Rating/rating'
 import { Comment_API, Episode_API, Movie_API, headerConfig } from '@/constant'
 import { getToken, getUserId } from '@/helpers'
+import { Spin } from '@douyinfe/semi-ui'
 import axios from 'axios'
 import { Button, Card, Label, Spinner, TextInput } from 'flowbite-react'
 import { useFormik } from 'formik'
@@ -13,14 +15,14 @@ const MovideDetailPage = () => {
   const [episodes, setEpisode] = useState(null)
   const [movie, setMovie] = useState(null)
   const [comments, setComments] = useState([])
+  const [movieRating, setMovieRating] = useState()
   const [spinner, setSpinner] = useState(true)
-  const currentUrl = window.location.href;
-  console.log("currentUrl: ", currentUrl);
+  const currentUrl = window.location.href
   const lastSegment = currentUrl.split('/').pop()
   const isLogin = getToken()
   const userId = getUserId()
-  const movieId = lastSegment ? lastSegment : useParams().id;
-
+  const movieId = lastSegment ? lastSegment : useParams().id
+  const [rating, setRating] = useState(1)
   const formik = useFormik({
     initialValues: {
       commentContent: '',
@@ -49,7 +51,10 @@ const MovideDetailPage = () => {
         })
     },
   })
-
+  const updateRating = newRating => {
+    setRating(newRating)
+    formik.setFieldValue('rating', newRating) // Update the formik value
+  }
   const handleFetchComment = () => {
     // Fetching Comment of movie
     axios
@@ -59,6 +64,20 @@ const MovideDetailPage = () => {
       .then(response => {
         // Navigation to homepage
         setComments(response.data.data)
+      })
+      .catch(error => {
+        console.log('An error occurred:', error.response)
+      })
+    // Fetching Rating of movie
+    axios
+      .get(`${Comment_API}/averageRating/${movieId}`, {
+        headers: headerConfig,
+      })
+      .then(response => {
+        // Navigation to homepage
+        console.log(response.data.data)
+        var roundedNumber: any = parseFloat(response.data.data.toFixed(1))
+        setMovieRating(roundedNumber)
       })
       .catch(error => {
         console.log('An error occurred:', error.response)
@@ -89,6 +108,21 @@ const MovideDetailPage = () => {
       .then(response => {
         // Navigation to homepage
         setEpisode(response.data.data)
+      })
+      .catch(error => {
+        console.log('An error occurred:', error.response)
+      })
+
+    // Fetching Rating of movie
+    axios
+      .get(`${Comment_API}/averageRating/${movieId}`, {
+        headers: headerConfig,
+      })
+      .then(response => {
+        // Navigation to homepage
+        console.log(response.data.data)
+        var roundedNumber: any = parseFloat(response.data.data.toFixed(1))
+        setMovieRating(roundedNumber)
       })
       .catch(error => {
         console.log('An error occurred:', error.response)
@@ -129,6 +163,11 @@ const MovideDetailPage = () => {
           </div>
 
           <div className='flex gap-4'>
+            <p className='font-semibold'>Đánh giá: </p>
+            <p>{movieRating} / 5</p>
+          </div>
+
+          <div className='flex gap-4'>
             <p className='font-semibold min-w-[6rem]'>Mô tả phim: </p>
             <p className='overflow-y-scroll h-36'>{movie.description}</p>
           </div>
@@ -166,53 +205,49 @@ const MovideDetailPage = () => {
 
         <div className='flow-root'>
           <ul className='divide-y divide-gray-200 dark:divide-gray-700'>
-            {comments.map(comment => (
-              <li className='py-3 sm:py-4'>
-                <div className='flex items-start space-x-4'>
-                  <div className='shrink-0'>
-                    <img
-                      alt='Avatar image'
-                      className='rounded-lg aspect-square !h-[100px] !w-[100px]'
-                      src='https://i.pinimg.com/564x/f7/44/e7/f744e7bd579098a9c9bb606e05608636.jpg'
-                    />
+            {spinner ? (
+              <div className='flex justify-center items-center gap-4'>
+                <Spin aria-label='Spinner button example' />
+              </div>
+            ) : (
+              comments.map(comment => (
+                <li className='py-3 sm:py-4'>
+                  <div className='flex items-start space-x-4'>
+                    <div className='shrink-0'>
+                      <img
+                        alt='Avatar image'
+                        className='rounded-lg aspect-square !h-[100px] !w-[100px]'
+                        src='https://i.pinimg.com/564x/f7/44/e7/f744e7bd579098a9c9bb606e05608636.jpg'
+                      />
+                    </div>
+                    <div className='min-w-0 flex-1'>
+                      <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
+                        {new Date(comment.commentedDate).toLocaleDateString()}
+                      </p>
+                      <p className='truncate text-sm font-medium text-gray-900 dark:text-white'></p>
+                      <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
+                        {comment.commentContent}
+                      </p>
+                    </div>
                   </div>
-                  <div className='min-w-0 flex-1'>
-                    <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
-                      {new Date(comment.commentedDate).toLocaleDateString()}
-                    </p>
-                    <p className='truncate text-sm font-medium text-gray-900 dark:text-white'></p>
-                    <p className='truncate text-sm text-gray-500 dark:text-gray-400'>
-                      {comment.commentContent}
-                    </p>
-                  </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              ))
+            )}
           </ul>
         </div>
       </Card>
 
-      <Card className='w-fit'>
+      <Card className=''>
         <form onSubmit={formik.handleSubmit} className='grid grid-cols-5 gap-5'>
           <TextInput
             id='commentContent'
             name='commentContent'
             type='text'
-            placeholder='Enter your comment here'
+            placeholder='Nhập bình luận của bạn'
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.commentContent}
-            className='col-span-4'
-          />
-          <input
-            id='rating'
-            name='rating'
-            type='number'
-            placeholder='Enter your password'
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.rating}
-            hidden
+            className='col-span-5'
           />
           <input
             id='userId'
@@ -234,16 +269,19 @@ const MovideDetailPage = () => {
             value={formik.values.movieId}
             hidden
           />
+          <div className='col-span-2'>
+            <Rating updateRating={updateRating} />
+          </div>
           <Button
             type='submit'
             color='dark'
             size='sm'
-            className='w-fit col-span-1'
+            className='w-fit col-span-4'
           >
             {isLogin ? (
-              <>Comment</>
+              <>Bình Luận</>
             ) : (
-              <Link href='/auth/login'>Login to write comment</Link>
+              <Link href='/auth/login'>Đăng nhập để bình luận</Link>
             )}
           </Button>
         </form>
