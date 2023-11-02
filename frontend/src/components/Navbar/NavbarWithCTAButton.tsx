@@ -75,7 +75,7 @@ const NavbarWithCTAButton = () => {
                     src={`${
                       user.avatar_url
                         ? user.avatar_url
-                        : 'https://i.pinimg.com/564x/c5/ba/4a/c5ba4a4c7f9c6c78b65d68bca017d5e6.jpg'
+                        : 'https://i.pinimg.com/564x/26/86/c1/2686c15c6684eb353ebf7a990bf46d98.jpg'
                     }`}
                     alt='User Image'
                     width={50}
