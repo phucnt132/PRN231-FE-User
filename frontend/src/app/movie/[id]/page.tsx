@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 
 const MovideDetailPage = () => {
-  const [episodes, setEpisode] = useState(null)
+  const [episodes, setEpisodes] = useState([])
   const [movie, setMovie] = useState(null)
   const [comments, setComments] = useState([])
   const [movieRating, setMovieRating] = useState()
@@ -102,12 +102,12 @@ const MovideDetailPage = () => {
 
     // Fetching Episode of movie
     axios
-      .get(`${Episode_API}/movieId?movieId=${movieId}`, {
+      .get(`${Episode_API}/movie/movieId?movieId=${movieId}`, {
         headers: headerConfig,
       })
       .then(response => {
         // Navigation to homepage
-        setEpisode(response.data.data)
+        setEpisodes(response.data.data)
       })
       .catch(error => {
         console.log('An error occurred:', error.response)
