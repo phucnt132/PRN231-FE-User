@@ -25,7 +25,7 @@ const MovideDetailPage = () => {
   const formik = useFormik({
     initialValues: {
       commentContent: '',
-      rating: 1,
+      rating: null,
       userId: userId,
       movieId: movieId,
     },
