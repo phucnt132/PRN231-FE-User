@@ -3,6 +3,7 @@ import { Episode_API, Movie_API, headerConfig } from '@/constant'
 import axios from 'axios'
 import { Button, Card, Spinner } from 'flowbite-react'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const EpisodePage = () => {
@@ -10,16 +11,13 @@ const EpisodePage = () => {
   const [episodes, setEpisodes] = useState(null)
   const [movie, setMovie] = useState(null)
   const [spinner, setSpinner] = useState(true)
-  let movieId
-  let episodeId
+  // const currentUrl = typeof window == 'undefined' ? '' : window.location.href
+  // const parts = currentUrl.split('/')
+  let urlParams = useParams();
+  let movieId = urlParams.id;
+  let episodeId = urlParams.eid;
 
   useEffect(() => {
-    const currentUrl = typeof window == 'undefined' ? '' : window.location.href
-    const parts = currentUrl.split('/')
-    movieId = parts[4]
-    const lastSegment = parts[6]
-    episodeId = lastSegment
-
     axios
       .get(`${Movie_API}/id?id=${movieId}`, {
         headers: headerConfig,
@@ -49,7 +47,7 @@ const EpisodePage = () => {
       })
 
     axios
-      .get(`${Episode_API}/movieId?movieId=${movieId}`, {
+      .get(`${Episode_API}/movie/movieId?movieId=${movieId}`, {
         headers: headerConfig,
       })
       .then(response => {
