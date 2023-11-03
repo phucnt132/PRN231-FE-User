@@ -26,7 +26,7 @@ const MovideDetailPage = () => {
   const formik = useFormik({
     initialValues: {
       commentContent: '',
-      rating: 1,
+      rating: null,
       userId: userId,
       movieId: movieId,
     },
@@ -37,7 +37,7 @@ const MovideDetailPage = () => {
       setSpinner(true)
       axios
         .post(`${Comment_API}/create`, values, {
-          headers: headerConfig,
+          headers: { 'Access-Control-Allow-Origin': '*' , Authorization: `Bearer ${getToken()}`},
         })
         .then(response => {
           console.log(response)
@@ -58,7 +58,7 @@ const MovideDetailPage = () => {
   const handleFetchComment = () => {
     // Fetching Comment of movie
     axios
-      .get(`${Comment_API}/movieId?movieId=${movieId}`, {
+      .get(`${Comment_API}/movie/movieId?movieId=${movieId}`, {
         headers: headerConfig,
       })
       .then(response => {
