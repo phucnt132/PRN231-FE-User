@@ -16,8 +16,8 @@ input[type=radio] {
 
 .Rating {
     display: flex;
-    flex-direction: row; /* Display the radio inputs horizontally */
-    align-items: center; /* Vertically center the stars and radio inputs */
-  }
-
-
+    flex-direction: row;
+    /* Display the radio inputs horizontally */
+    align-items: center;
+    /* Vertically center the stars and radio inputs */
+}
