@@ -60,18 +60,6 @@ const MovideDetailPage = () => {
     formik.setFieldValue('rating', newRating) // Update the formik value
   }
   const handleFetchComment = () => {
-    // Fetching Comment of movie
-    axios
-      .get(`${Comment_API}/movie/movieId?movieId=${movieId}`, {
-        headers: headerConfig,
-      })
-      .then(response => {
-        // Navigation to homepage
-        setComments(response.data.data)
-      })
-      .catch(error => {
-        console.log('An error occurred:', error.response)
-      })
     // Fetching Rating of movie
     axios
       .get(`${Comment_API}/averageRating/${movieId}`, {
@@ -82,6 +70,18 @@ const MovideDetailPage = () => {
         console.log(response.data.data)
         var roundedNumber: any = parseFloat(response.data.data.toFixed(1))
         setMovieRating(roundedNumber)
+        // Fetching Comment of movie
+        axios
+          .get(`${Comment_API}/movie/movieId?movieId=${movieId}`, {
+            headers: headerConfig,
+          })
+          .then(response => {
+            // Navigation to homepage
+            setComments(response.data.data)
+          })
+          .catch(error => {
+            console.log('An error occurred:', error.response)
+          })
       })
       .catch(error => {
         console.log('An error occurred:', error.response)
