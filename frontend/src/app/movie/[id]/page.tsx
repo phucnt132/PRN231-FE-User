@@ -17,11 +17,12 @@ const MovideDetailPage = () => {
   const [comments, setComments] = useState([])
   const [movieRating, setMovieRating] = useState()
   const [spinner, setSpinner] = useState(true)
-  const currentUrl = window.location.href
-  const lastSegment = currentUrl.split('/').pop()
+  // const currentUrl = window.location.href
+  // const lastSegment = currentUrl.split('/').pop()
   const isLogin = getToken()
   const userId = getUserId()
-  const movieId = lastSegment ? lastSegment : useParams().id
+  const movieId = useParams().id
+
   const [rating, setRating] = useState(1)
   const formik = useFormik({
     initialValues: {
@@ -131,7 +132,12 @@ const MovideDetailPage = () => {
     handleFetchComment()
   }, [])
 
-  if (spinner) return <Spinner aria-label='Spinner button example' />
+  if (spinner)
+    return (
+      <div className='w-full h-[100vh] flex justify-center items-center'>
+        <Spinner className='' aria-label='Spinner button example' />
+      </div>
+    )
   // Render UI
   return (
     <div className='flex flex-col gap-4 my-4'>
@@ -178,7 +184,7 @@ const MovideDetailPage = () => {
           </div>
 
           <div className='flex gap-4 items-center'>
-            <p className='font-semibold'>Danh sách tập: </p>
+            <p className='font-semibold'>Danh sách tập hiện có: </p>
             <div className='flex gap-4'>
               {episodes?.map((item, idx) => (
                 <Link href={`${movieId}/episode/${item.episodeId}`}>

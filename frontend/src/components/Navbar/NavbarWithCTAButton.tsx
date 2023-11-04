@@ -23,6 +23,7 @@ const NavbarWithCTAButton = () => {
     removeToken()
     removeUserId()
     router.push('/auth/login')
+    location.reload()
   }
 
   const show = () => {
@@ -50,8 +51,15 @@ const NavbarWithCTAButton = () => {
         items={
           deviceType !== 'mobile'
             ? NavigationBarData.map(item => ({
-                text: item.name,
-                link: item.href,
+                text: (
+                  <Link
+                    href={item.href}
+                    replace
+                    className='!text-light-content-neutral-1'
+                  >
+                    {item.name}
+                  </Link>
+                ),
               }))
             : []
         }
