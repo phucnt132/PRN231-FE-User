@@ -32,13 +32,16 @@ const MovideDetailPage = () => {
       movieId: movieId,
     },
     validationSchema: Yup.object({
-      commentContent: Yup.string().required('Required'),
+      commentContent: Yup.string().required('Vui lòng nhập bình luận của bạn'),
     }),
     onSubmit: values => {
       setSpinner(true)
       axios
         .post(`${Comment_API}/create`, values, {
-          headers: { 'Access-Control-Allow-Origin': '*' , Authorization: `Bearer ${getToken()}`},
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            Authorization: `Bearer ${getToken()}`,
+          },
         })
         .then(response => {
           console.log(response)
@@ -245,6 +248,11 @@ const MovideDetailPage = () => {
 
       <Card className=''>
         <form onSubmit={formik.handleSubmit} className='grid grid-cols-5 gap-5'>
+          {formik.touched.commentContent && formik.errors.commentContent ? (
+            <div className='text-xs text-red-600 dark:text-red-400'>
+              {formik.errors.commentContent}
+            </div>
+          ) : null}
           <TextInput
             id='commentContent'
             name='commentContent'
