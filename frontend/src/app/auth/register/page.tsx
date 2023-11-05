@@ -137,7 +137,7 @@ const RegisterPage = () => {
             <TextInput
               id='confirmPassword'
               name='confirmPassword'
-              type='confirmPassword'
+              type='password'
               placeholder='Enter your confirm password'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
