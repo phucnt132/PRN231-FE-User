@@ -11,6 +11,7 @@ import { FiMenu } from 'react-icons/fi'
 import { Button } from 'flowbite-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { replace } from 'formik'
 
 const NavbarWithCTAButton = () => {
   const { user } = useAuthContext()
@@ -22,6 +23,7 @@ const NavbarWithCTAButton = () => {
     removeToken()
     removeUserId()
     router.push('/auth/login')
+    location.reload()
   }
 
   const show = () => {
@@ -37,7 +39,11 @@ const NavbarWithCTAButton = () => {
         mode={'horizontal'}
         header={{
           text: (
-            <Link href='/' className='text-xl !text-light-content-neutral-1'>
+            <Link
+              href='/'
+              replace
+              className='text-xl !text-light-content-neutral-1'
+            >
               HighFlix
             </Link>
           ),
@@ -45,8 +51,15 @@ const NavbarWithCTAButton = () => {
         items={
           deviceType !== 'mobile'
             ? NavigationBarData.map(item => ({
-                text: item.name,
-                link: item.href,
+                text: (
+                  <Link
+                    href={item.href}
+                    replace
+                    className='!text-light-content-neutral-1'
+                  >
+                    {item.name}
+                  </Link>
+                ),
               }))
             : []
         }
@@ -70,7 +83,7 @@ const NavbarWithCTAButton = () => {
                     src={`${
                       user.avatar_url
                         ? user.avatar_url
-                        : 'https://i.pinimg.com/564x/c5/ba/4a/c5ba4a4c7f9c6c78b65d68bca017d5e6.jpg'
+                        : 'https://i.pinimg.com/564x/26/86/c1/2686c15c6684eb353ebf7a990bf46d98.jpg'
                     }`}
                     alt='User Image'
                     width={50}
